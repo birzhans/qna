@@ -3,8 +3,8 @@ env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
 
-name: Rails_tests
-on: [push, pull_request]
+name: Tests
+on: pull_request
 
 jobs:
   test:
@@ -47,12 +47,6 @@ jobs:
 
       - name: Rubocop
         run: bundle exec rubocop
-
-      - name: Reek
-        run: bundle exec reek
-
-      - name: Brakeman
-        run: bundle exec brakeman -q --no-pager
 
       - name: RSpec
         run: bundle exec rspec

@@ -1,0 +1,51 @@
+
+env:
+  RUBY_VERSION: 2.7.0
+  POSTGRES_USER: dev
+  POSTGRES_PASSWORD: hard_password
+
+name: QnA Tests
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+        - 5432:5432
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+
+    steps:
+      - name: Create repository
+        uses: actions/checkout@v2
+      
+      - name: Set config
+        run: |
+          mv config/database.yml.sample config/database.yml
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+
+      - name: Install postgres client
+        run: sudo apt-get install libpq-dev
+
+      - name: Create database
+        env:
+          RAILS_ENV: test
+        run: bundler exec rails db:create db:migrate
+
+      - name: Webpack compile
+        run: bundler exec rails webpacker:install
+
+      - name: Rubocop
+        run: bundle exec rubocop
+
+      - name: RSpec
+        run: bundle exec rspec

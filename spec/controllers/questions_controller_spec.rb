@@ -5,6 +5,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3) }
+
     before { get :index }
 
     it 'populates an array of all questions' do
@@ -24,7 +25,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe "GET #new" do
+  describe 'GET #new' do
     before { get :new }
 
     it 'renders new view' do
@@ -32,7 +33,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe "GET #edit" do
+  describe 'GET #edit' do
     before { get :edit, params: { id: question } }
 
     it 'renders edit view' do
@@ -54,7 +55,9 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with invalid attributes' do
       it 'does not save the question' do
-        expect { post :create, params: { question: attributes_for(:question, :invalid) } }.to_not change(Question, :count)
+        expect do
+          post :create, params: { question: attributes_for(:question, :invalid) }
+        end.not_to change(Question, :count)
       end
 
       it 're-renders new view' do
@@ -78,6 +81,7 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.title).to eq 'new title'
         expect(question.body).to eq 'new body'
       end
+
       it 'redirects to updated question' do
         patch :update, params: { id: question, question: attributes_for(:question) }
         expect(response).to redirect_to question
@@ -103,11 +107,11 @@ RSpec.describe QuestionsController, type: :controller do
     let!(:question) { create(:question) }
 
     it 'deletes the question' do
-      expect { delete :destroy, params: {id: question} }.to change(Question, :count).by(-1)
+      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
     end
 
     it 'redirects to index view' do
-      delete :destroy, params: {id: question}
+      delete :destroy, params: { id: question }
       expect(response).to redirect_to questions_path
     end
   end

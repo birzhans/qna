@@ -5,7 +5,8 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'GET #new' do
     let(:answer) { create(:answer, question: question) }
-    before { get :new, params: {question_id: question.id} }
+
+    before { get :new, params: { question_id: question.id } }
 
     it 'assigns new answer to @answer' do
       expect(assigns(:answer)).to be_a_new(Answer)
@@ -19,7 +20,10 @@ RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
     context 'with valid attributes' do
       it 'saves a new answer to a database' do
-        expect { post :create, params: { answer: attributes_for(:answer), question_id: question } }.to change(question.answers, :count).by(1)
+        expect do
+          post :create,
+               params: { answer: attributes_for(:answer), question_id: question }
+        end.to change(question.answers, :count).by(1)
       end
 
       it 'redirects to question show view' do
@@ -30,7 +34,10 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with invalid attributes' do
       it 'does not save the answer' do
-        expect { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) } }.to_not change(question.answers, :count)
+        expect do
+          post :create,
+               params: { question_id: question, answer: attributes_for(:answer, :invalid) }
+        end.not_to change(question.answers, :count)
       end
 
       it 'renders answer new view' do

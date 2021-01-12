@@ -1,43 +1,49 @@
-name: CI
-on: [pull_request]
+name: QnA Test
+
+on:
+  pull_request:
+    branches:
+      - '*'
+  push:
+    branches:
+      - 'master'
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
+
     services:
       postgres:
-        image: postgres:11
-        ports:
-          - 5432:5432
-
+        env:
+          POSTGRES_USER: sasha370
+          POSTGRES_PASSWORD: sasha370
+          POSTGRES_DB: stackoverflow_test
+        image: postgres:12
+        ports: ['5432:5432']
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-    steps:
-      - uses: actions/checkout@v1
 
-      - uses: actions/setup-ruby@v1
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.7.0
 
-      - name: Install dependent libraries
-        run: sudo apt-get install libpq-dev
+      - name: Build and test with Rake
+        env:
+          RAILS_ENV: test
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: dev
+          POSTGRES_PASSWORD: hard_password
+          POSTGRES_DB: qna_test
 
-      - name: Bundle install
+
         run: |
-          gem install bundler
+          sudo apt-get -yqq install libpq-dev
+          yarn --frozen-lockfile
+          gem install bundler --no-document
           bundle install --jobs 4 --retry 3
-
-      - name: Setup Database
-        run: |
-          cp config/database.yml.github-actions config/database.yml
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
-        env:
-          RAILS_ENV: test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-
-      - name: Run RSpec
-        run: COVERAGE=true bundle exec rspec  --require rails_helper
-        env:
-          RAILS_ENV: test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          bundle exec rails db:setup
+          bundle exec rspec 

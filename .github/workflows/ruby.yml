@@ -1,12 +1,8 @@
-name: qna_test
-
+name: CI
 on: [pull_request]
-
 jobs:
-  test:
-    name: Tests
+  build:
     runs-on: ubuntu-latest
-    
     services:
       postgres:
         image: postgres:latest
@@ -15,13 +11,35 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
-      with:
-        ruby-version: 2.7
-        bundler-cache: true
-    - name: Run tests
-      run: bundle exec rake
+      - uses: actions/checkout@v1
+
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7.0
+
+      - name: Install dependent libraries
+        run: sudo apt-get install libpq-dev
+
+      - name: Bundle install
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+
+      - name: Setup Database
+        run: |
+          cp config/database.yml.github-actions config/database.yml
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
+        env:
+          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+
+      - name: Run RSpec
+        run: COVERAGE=true bundle exec rspec  --require rails_helper
+        env:
+          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres

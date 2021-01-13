@@ -37,6 +37,8 @@ Style/GlobalVars:
 
 RSpec/ImplicitExpect:
   Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
 Layout/SpaceBeforeBrackets: # (new in 1.7)
   Enabled: true
 Lint/AmbiguousAssignment: # (new in 1.7)

@@ -5,16 +5,26 @@ feature 'user can log in',  %q{
   As an authenticated user
   I'd like to be able to sign in
 } do
+
+  given(:user) { create(:user) }
+
+  background { visit new_user_session_path }
+
   scenario 'Registered user tries to sign in' do
-    User.create!(email: 'example@mail.com', password: 'secret')
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+    click_on 'Log in'
 
-    visit '/login'
-    fill_in 'Email', with: 'example@mail.com'
-    fill_in 'Password', with: 'secret'
-
+    #save_and_open_page
     expect(page).to have_content 'Signed in successfully.'
   end
 
 
-  scenario 'Unregistered user tries to sign in'
+  scenario 'Unregistered user tries to sign in' do
+    fill_in 'Email', with: 'wrong_example@mail.com'
+    fill_in 'Password', with: 'secret'
+    click_on 'Log in'
+
+    expect(page).to have_content 'Invalid Email or password.'
+  end
 end

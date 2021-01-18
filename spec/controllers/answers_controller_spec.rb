@@ -2,20 +2,8 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
-
-  describe 'GET #new' do
-    let(:answer) { create(:answer, question: question) }
-
-    before { get :new, params: { question_id: question.id } }
-
-    it 'assigns new answer to @answer' do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
-
-    it 'renders new view' do
-      expect(response).to render_template :new
-    end
-  end
+  let(:user) { create(:user) }
+  before { login(user) }
 
   describe 'POST #create' do
     context 'with valid attributes' do
@@ -40,9 +28,9 @@ RSpec.describe AnswersController, type: :controller do
         end.not_to change(question.answers, :count)
       end
 
-      it 'renders answer new view' do
+      it 'renders question view' do
         post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
-        expect(response).to render_template :new
+        expect(response).to redirect_to question
       end
     end
   end

@@ -12,7 +12,7 @@ AllCops:
 
 
 Layout/LineLength:
-  Max: 120
+  Max: 200
 
 Metrics/BlockLength:
   Exclude:
@@ -37,7 +37,11 @@ Style/GlobalVars:
 
 RSpec/ImplicitExpect:
   Enabled: false
+RSpec/ScatteredSetup:
+  Enabled: false
 RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/Capybara/FeatureMethods:
   Enabled: false
 Layout/SpaceBeforeBrackets: # (new in 1.7)
   Enabled: true
@@ -110,7 +114,7 @@ Rails/AttributeDefaultBlockValue: # (new in 2.9)
 Rails/FindById: # (new in 2.7)
   Enabled: true
 Rails/FilePath:
-  Enabled: true
+  Enabled: false
 Rails/Inquiry: # (new in 2.7)
   Enabled: true
 Rails/MailerName: # (new in 2.7)

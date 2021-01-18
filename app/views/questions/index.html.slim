@@ -1,1 +1,9 @@
+h1 All Questions (#{@count}):
+
+ul
+  -@questions.each do |q|
+    li
+      p #{q.title} - #{q.body}
+
+
 p= link_to 'Ask question', new_question_path

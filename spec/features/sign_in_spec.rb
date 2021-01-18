@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-feature 'user can log in',  %q{
+feature 'User can log in', "
   In order to ask questions
   As an authenticated user
   I'd like to be able to sign in
-} do
-
+" do
   given(:user) { create(:user) }
 
   background { visit new_user_session_path }
@@ -15,10 +14,9 @@ feature 'user can log in',  %q{
     fill_in 'Password', with: user.password
     click_on 'Log in'
 
-    #save_and_open_page
+    # save_and_open_page
     expect(page).to have_content 'Signed in successfully.'
   end
-
 
   scenario 'Unregistered user tries to sign in' do
     fill_in 'Email', with: 'wrong_example@mail.com'

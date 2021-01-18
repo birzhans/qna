@@ -2,9 +2,12 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %w[index show]
   def index
     @questions = Question.all
+    @count = Question.count
   end
 
-  def show; end
+  def show
+    @answer = Answer.new
+  end
 
   def new; end
 

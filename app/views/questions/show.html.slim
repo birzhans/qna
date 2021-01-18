@@ -1,2 +1,15 @@
 p= question.title
 p= question.body
+
+ul
+  -question.answers.each do |answer|
+    li
+      p #{answer.body}
+
+=form_with model: @answer,
+           url: question_answers_path(question),
+           html: {method: :post},
+           local: true do |form|
+  = form.label :body
+  = form.text_area :body
+  = form.submit 'Answer'

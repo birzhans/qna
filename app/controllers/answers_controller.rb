@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_question, only: %w[new create]
 
   def new
@@ -9,9 +10,9 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
 
     if @answer.save
-      redirect_to @question
+      redirect_to @question, notice: 'Your answer successfully created.'
     else
-      render :new
+      redirect_to @question, notice: "Body can't be blank."
     end
   end
 

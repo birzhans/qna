@@ -15,7 +15,7 @@ feature 'user can create answer', "
 
     scenario 'creates valid question' do
       fill_in 'Body', with: 'Answer body'
-      click_on 'Answer'
+      click_on 'Post'
 
       expect(page).to have_content 'Your answer successfully created.'
       expect(page).to have_content 'Answer body'
@@ -23,14 +23,14 @@ feature 'user can create answer', "
     end
 
     scenario 'creates invalid question' do
-      click_on 'Answer'
+      click_on 'Post'
       expect(page).to have_content "Body can't be blank."
     end
   end
 
   scenario 'Unauthenticated user creates question' do
     visit question_path(question)
-    click_on 'Answer'
+    click_on 'Post'
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 end

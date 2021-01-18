@@ -1,7 +1,7 @@
-p= question.title
-p= question.body
+p class='is-size-1' = question.title
+p class='subtitle' =  question.body
 
-ul
+ol
   -question.answers.each do |answer|
     li
       p #{answer.body}
@@ -10,6 +10,8 @@ ul
            url: question_answers_path(question),
            html: {method: :post},
            local: true do |form|
-  = form.label :body
-  = form.text_area :body
-  = form.submit 'Answer'
+  p
+    = form.label 'Your Answer'
+  p
+    = form.text_area :body, id: 'Body'
+  = form.submit 'Post', class: 'button is-link'

@@ -1,10 +1,10 @@
 p class='is-size-1' = question.title
 p class='subtitle' =  question.body
-
-ol
-  -question.answers.each do |answer|
-    li
-      p #{answer.body}
+.container
+  ol
+    -question.answers.each do |answer|
+      li
+        p #{answer.body}
 
 =form_with model: @answer,
            url: question_answers_path(question),
@@ -15,3 +15,6 @@ ol
   p
     = form.text_area :body, id: 'Body'
   = form.submit 'Post', class: 'button is-link'
+
+- if question.user_id.eql?(current_user&.id)
+  =link_to 'Delete', question_path(question), method: :delete, data: { confirm: 'Confirm' }

@@ -19,7 +19,6 @@ feature 'user can create answer', "
 
       expect(page).to have_content 'Your answer successfully created.'
       expect(page).to have_content 'Answer body'
-
     end
 
     scenario 'creates invalid question' do

@@ -24,7 +24,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'slim-rails'
 
 # UI
-gem "bulma-rails", "~> 0.8.0"
+gem 'bulma-rails', '~> 0.8.0'
 
 # AUTH
 gem 'devise'

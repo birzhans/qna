@@ -4,7 +4,11 @@ p class='subtitle' =  question.body
   ol
     -question.answers.each do |answer|
       li
-        p #{answer.body}
+        p
+          | #{answer.body}
+          - if answer.user_id.eql?(current_user&.id)
+            br
+            =link_to 'Delete Answer', answer_path(answer), method: :delete, data: { confirm: 'Confirm' }
 
 =form_with model: @answer,
            url: question_answers_path(question),

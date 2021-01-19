@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   describe 'GET #show' do
     let(:user) { create(:user) }
+
     before { login(user) }
+
     before { get :show }
 
     it 'renders show view' do

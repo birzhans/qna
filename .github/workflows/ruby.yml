@@ -42,7 +42,7 @@ jobs:
           RAILS_ENV: test  
         run: |
           bundler exec rails db:create db:migrate
-          bundle exec rails webpacker:compile
+          bundler exec rails webpacker:compile
       
       - name: RSpec
         run: bundle exec rspec

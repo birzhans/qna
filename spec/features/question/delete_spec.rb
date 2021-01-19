@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'User can delete own questions', "
-In order to delete my question
 As authenticated user
 I'd like to be able to delete my questions" do
   given(:user) { create(:user) }

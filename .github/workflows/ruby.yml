@@ -40,10 +40,7 @@ jobs:
       - name: Create database
         env:
           RAILS_ENV: test
-        run: bundler exec rails db:create db:migrate
+        run: bundler exec rails db:setup
       
-      - name: Webpack compile
-        run: bundler exec rails webpacker:install
-
       - name: RSpec
         run: bundle exec rspec

@@ -18,6 +18,7 @@ jobs:
         ports:
         - 5432:5432
         env:
+          POSTGRES_DB: qna_test
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
 
@@ -38,11 +39,10 @@ jobs:
 
       - name: Create database
         env:
-          RAILS_ENV: test
-        run: bundler exec rails db:create db:migrate
+          RAILS_ENV: test  
+        run: |
+          bundler exec rails db:create db:migrate
+          bundler exec rails webpacker:install
       
-      - name: Webpack compile
-        run: bundler exec rails webpacker:install
-
       - name: RSpec
         run: bundle exec rspec

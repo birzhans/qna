@@ -23,6 +23,12 @@ gem 'jbuilder', '~> 2.7'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'slim-rails'
 
+# UI
+gem 'bulma-rails', '~> 0.8.0'
+
+# AUTH
+gem 'devise'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -52,6 +58,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'webdrivers'
+  gem 'launchy'
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_question, only: %w[new create]
 
   def new
@@ -7,12 +8,19 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answer_params)
-
+    @answer.user = current_user
     if @answer.save
-      redirect_to @question
+      redirect_to @question, notice: 'Your answer successfully created.'
     else
-      render :new
+      redirect_to @question, notice: "Body can't be blank."
     end
+  end
+
+  def destroy
+    answer = Answer.find(params[:id])
+    answer.destroy
+
+    redirect_to answer.question, notice: 'Answer was successfully deleted.'
   end
 
   private

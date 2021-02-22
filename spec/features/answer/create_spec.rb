@@ -13,17 +13,16 @@ feature 'user can create answer', "
 
     background { visit question_path(question) }
 
-    scenario 'creates valid question' do
+    scenario 'creates valid question', js: true do
       fill_in 'Body', with: 'Answer body'
       click_on 'Post'
 
-      expect(page).to have_content 'Your answer successfully created.'
       expect(page).to have_content 'Answer body'
     end
 
-    scenario 'creates invalid question' do
+    scenario 'creates invalid question', js: true do
       click_on 'Post'
-      expect(page).to have_content "Body can't be blank."
+      expect(page).to have_content "Body can't be blank"
     end
   end
 

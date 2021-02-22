@@ -7,13 +7,9 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
+    @answer = @question.answers.create(answer_params)
     @answer.user = current_user
-    if @answer.save
-      redirect_to @question, notice: 'Your answer successfully created.'
-    else
-      redirect_to @question, notice: "Body can't be blank."
-    end
+    @answer.save
   end
 
   def destroy

@@ -2,18 +2,11 @@ p class='is-size-1' = question.title
 p class='subtitle' =  question.body
 .container
   ol
-    -question.answers.each do |answer|
-      li
-        p
-          | #{answer.body}
-          - if answer.user_id.eql?(current_user&.id)
-            br
-            =link_to 'Delete Answer', answer_path(answer), method: :delete, data: { confirm: 'Confirm' }
+    = render question.answers
 
-=form_with model: @answer,
-           url: question_answers_path(question),
-           html: {method: :post},
-           local: true do |form|
+.answer-errors
+  =render 'shared/errors', resource: @answer
+=form_with model: [question, @answer], local: false do |form|
   p
     = form.label 'Your Answer'
   p

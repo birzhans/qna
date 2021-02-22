@@ -3,7 +3,7 @@ h1 class='is-size-3'  All Questions (#{@count} found):
 ul
   -@questions.each do |q|
     li
-      p class='is-size-5' #{q.title} - #{q.body}
+      p class='is-size-5' =link_to q.title, question_path(q)
 
 
 p= link_to 'Ask question', new_question_path

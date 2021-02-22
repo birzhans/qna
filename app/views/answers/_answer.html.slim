@@ -3,4 +3,17 @@ li
     | #{answer.body}
     - if answer.user_id.eql?(current_user&.id)
       br
-      =link_to 'Delete Answer', answer_path(answer), method: :delete, data: { confirm: 'Confirm' }
+      = link_to 'Delete Answer', answer_path(answer), method: :delete, data: { confirm: 'Confirm' }
+      br
+      = link_to 'Edit', '#', class: 'edit-answer', data: { answer_id: answer.id }
+
+      = form_with model: answer,
+                  local: false,
+                  class: 'hide',
+                  html: { id: "edit-answer-#{answer.id}" } do |f|
+        = f.label :body, 'Your answer'
+        br
+        = f.text_area :body
+        br
+        = f.submit 'Save'
+

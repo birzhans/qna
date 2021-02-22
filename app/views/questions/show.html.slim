@@ -1,8 +1,9 @@
 p class='is-size-1' = question.title
 p class='subtitle' =  question.body
 .container
-  ol
-    = render question.answers
+  .answers
+    ol
+      = render question.answers
 
 .answer-errors
   =render 'shared/errors', resource: @answer

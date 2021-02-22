@@ -19,6 +19,11 @@ class AnswersController < ApplicationController
     redirect_to answer.question, notice: 'Answer was successfully deleted.'
   end
 
+  def update
+    @answer = Answer.find(params[:id])
+    @answer.update(answer_params)
+  end
+
   private
 
   def find_question

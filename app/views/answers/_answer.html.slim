@@ -1,5 +1,6 @@
 p
   | #{answer.body}
-  - if answer.user_id.eql?(current_user&.id)
-    br
-    =link_to 'Delete Answer', answer_path(answer), method: :delete, data: { confirm: 'Confirm' }
+  - if answer.user == current_user
+    = link_to 'Edit', '#', class: 'answer-link edit-answer', data: { answer_id: answer.id }
+    = link_to 'Delete Answer', answer_path(answer), method: :delete, class: 'answer-link'
+    = render 'answers/form', answer: answer

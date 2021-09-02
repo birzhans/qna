@@ -1,3 +1,5 @@
+= link_to 'All Questions', questions_path
+
 p.is-size-1
   = question.title
 p.subtitle
@@ -8,7 +10,11 @@ p.subtitle
 .answer-errors
   = render 'shared/errors', resource: @answer
 
-= render 'form', answer: @answer
+= form_with model: [question, @answer], class: 'new-answer', local: false do |f|
+  p
+    = f.label :body, 'Your answer'
+    = f.text_area :body, id: "new-answer-body"
+  = f.submit 'Create'
 
-- if question.user_id.eql?(current_user&.id)
+- if question.user == current_user
   = link_to 'Delete', question_path(question), method: :delete, data: { confirm: 'Confirm' }

@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_question, only: %w[new create]
-  before_action :set_answer, only: %w[destroy]
+  before_action :set_answer, only: %w[update destroy]
 
   def new
     @answer = @question.answers.new
@@ -12,6 +12,12 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     @answer.save
     flash[:notice] = "Your answer #{@answer.body} successfully created."
+  end
+
+  def update
+    @answer.update(answer_params)
+    @question = @answer.question
+    flash[:notice] = "Your answer #{@answer.body} successfully updated."
   end
 
   def destroy

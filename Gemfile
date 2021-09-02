@@ -26,6 +26,8 @@ gem 'slim-rails'
 # UI
 gem 'bulma-rails', '~> 0.8.0'
 
+gem 'jquery-rails'
+
 # AUTH
 gem 'devise'
 

@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_question, only: %w[new create]
+  before_action :set_question, only: %w[new create]
+  before_action :set_answer, only: %w[destroy]
 
   def new
     @answer = @question.answers.new
@@ -9,24 +10,25 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-    if @answer.save
-      redirect_to @question, notice: 'Your answer successfully created.'
-    else
-      redirect_to @question, notice: "Body can't be blank."
-    end
+    @answer.save
+    flash[:notice] = "Your answer #{@answer.body} successfully created."
   end
 
   def destroy
-    answer = Answer.find(params[:id])
-    answer.destroy
+    question = @answer.question
+    @answer.destroy
 
-    redirect_to answer.question, notice: 'Answer was successfully deleted.'
+    redirect_to question, notice: 'Answer was successfully deleted.'
   end
 
   private
 
-  def find_question
+  def set_question
     @question = Question.find(params[:question_id])
+  end
+
+  def set_answer
+    @answer = Answer.find(params[:id])
   end
 
   def answer_params

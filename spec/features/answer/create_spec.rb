@@ -9,27 +9,30 @@ feature 'user can create answer', "
   describe 'Authenticated user' do
     given(:user) { create(:user) }
 
-    background { login(user) }
-
-    background { visit question_path(question) }
-
-    scenario 'creates valid question' do
-      fill_in 'Body', with: 'Answer body'
-      click_on 'Post'
-
-      expect(page).to have_content 'Your answer successfully created.'
-      expect(page).to have_content 'Answer body'
+    background do
+      login(user)
+      visit question_path(question)
     end
 
-    scenario 'creates invalid question' do
+    scenario 'creates valid question', js: true do
+      fill_in 'answer_body', with: 'Answer body'
       click_on 'Post'
-      expect(page).to have_content "Body can't be blank."
+
+      expect(page).to have_content('Your answer Answer body successfully created.', wait: 0.1)
+      within '.answers' do
+        expect(page).to have_content('Answer body', wait: 0.1)
+      end
+    end
+
+    scenario 'creates invalid question', js: true do
+      click_on 'Post'
+      expect(page).to have_content("Body can't be blank", wait: 0.1)
     end
   end
 
   scenario 'Unauthenticated user creates question' do
     visit question_path(question)
     click_on 'Post'
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to have_content('You need to sign in or sign up before continuing.', wait: 0.1)
   end
 end

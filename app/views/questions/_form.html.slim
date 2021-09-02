@@ -1,0 +1,7 @@
+= form_with model: @answer, url: question_answers_path(question),
+            html: {method: :post}, local: false do |form|
+  p
+    = form.label 'Your Answer'
+  p
+    = form.text_area :body
+  = form.submit 'Post', class: 'button is-link'

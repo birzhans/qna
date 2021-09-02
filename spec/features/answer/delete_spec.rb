@@ -8,7 +8,7 @@ I'd like to be able to delete my answer" do
   scenario 'Authenticated user tries to delete own answer' do
     login(user)
     question = create(:question, user: user)
-    answer = create(:answer, user: user, question: question)
+    create(:answer, user: user, question: question)
     visit question_path(question)
     click_on 'Delete Answer'
     expect(page).to have_content 'Answer was successfully deleted.'
@@ -16,9 +16,8 @@ I'd like to be able to delete my answer" do
 
   scenario "Authenticated user tries to delete other's answer" do
     login(other)
-
     question = create(:question, user: user)
-    answer = create(:answer, user: user, question: question)
+    create(:answer, user: user, question: question)
     visit question_path(question)
 
     expect(page).not_to have_content 'Delete Answer'

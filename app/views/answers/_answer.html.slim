@@ -1,6 +1,6 @@
-p
+p id="answer-#{answer.id}"
   | #{answer.body}
   - if answer.user == current_user
     = link_to 'Edit', '#', class: 'answer-link edit-answer', data: { answer_id: answer.id }
-    = link_to 'Delete Answer', answer_path(answer), method: :delete, class: 'answer-link'
+    = link_to 'Delete Answer', answer_path(answer), method: :delete, remote: true, class: 'answer-link'
     = render 'answers/form', answer: answer

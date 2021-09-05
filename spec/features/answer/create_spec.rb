@@ -14,8 +14,8 @@ feature 'user can create answer', "
       visit question_path(question)
     end
 
-    scenario 'creates valid question', js: true do
-      fill_in 'answer_body', with: 'Answer body'
+    scenario 'creates valid answer', js: true do
+      fill_in 'new-answer-body', with: 'Answer body'
       click_on 'Create'
 
       expect(page).to have_content('Your answer Answer body successfully created.', wait: 0.1)

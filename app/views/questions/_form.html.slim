@@ -1,0 +1,8 @@
+= form_with model: question, local: false, class: 'hidden box',
+            html: { id: "edit-question-#{question.id}" } do |form|
+  .field
+    = form.text_area :title, class: 'input'
+  .field
+    = form.text_area :body, class: 'input'
+  .field
+    = form.submit 'Save', class: 'button'

@@ -1,9 +1,16 @@
 = link_to 'All Questions', questions_path
 
-p.is-size-1
+p#question-errors
+p.is-size-1#question-title
   = question.title
-p.subtitle
+p.subtitle#question-body
   = question.body
+  - if question.user == current_user
+    .buttons
+      = link_to 'Edit', edit_question_path(question), class: 'button is-light',
+                id: 'edit-question', data: { 'question-id': question.id }
+      = render 'form', question: question
+      = link_to 'Delete', question_path(question), method: :delete, class: 'button is-warning'
 .container.answers
   = render question.answers
 
@@ -15,6 +22,3 @@ p.subtitle
     = f.label :body, 'Your answer'
     = f.text_area :body, id: "new-answer-body"
   = f.submit 'Create'
-
-- if question.user == current_user
-  = link_to 'Delete', question_path(question), method: :delete, data: { confirm: 'Confirm' }

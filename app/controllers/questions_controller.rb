@@ -7,6 +7,8 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @best_answer = question.best_answer
+    @answers = question.answers.where.not(id: @question.best_answer_id)
   end
 
   def new; end
@@ -30,6 +32,12 @@ class QuestionsController < ApplicationController
   def destroy
     question.destroy
     redirect_to questions_path, notice: 'Question was successfully deleted.'
+  end
+
+  def best_answer
+    @previous_best_answer = question.best_answer
+    @best_answer = Answer.find(params[:answer_id])
+    question.update(best_answer_id: @best_answer.id)
   end
 
   private

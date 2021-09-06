@@ -112,4 +112,31 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to redirect_to questions_path
     end
   end
+
+  describe "POST #best_answer" do
+    before { login user }
+    context "Question doesn't have the best answer" do
+      let(:answer) { create(:answer, question: question, user: user) }
+      before { post :best_answer, params: { id: question.id, answer_id: answer.id }, format: :js }
+
+      it 'saves the best answer to question' do
+        question.reload
+        expect(question.best_answer_id).to eq answer.id
+      end
+    end
+
+    context "Question has the best answer" do
+      let(:answer) { create(:answer, question: question, user: user) }
+      let(:other_answer) { create(:answer, question: question, user: user) }
+      before do
+        question.update(best_answer: answer)
+        post :best_answer, params: { id: question.id, answer_id: other_answer.id }, format: :js
+      end
+
+      it 'saves the best answer to question' do
+        question.reload
+        expect(question.best_answer_id).to eq other_answer.id
+      end
+    end
+  end
 end

@@ -11,8 +11,13 @@ p.subtitle#question-body
                 id: 'edit-question', data: { 'question-id': question.id }
       = render 'form', question: question
       = link_to 'Delete', question_path(question), method: :delete, class: 'button is-warning'
+
+.container#best-answer
+  - if @best_answer
+    = render 'answers/best_answer', best_answer: @best_answer
+
 .container.answers
-  = render question.answers
+  = render @answers
 
 .answer-errors
   = render 'shared/errors', resource: @answer

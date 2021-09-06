@@ -1,9 +1,10 @@
 require 'rails_helper'
 
-feature 'user can create answer', "
+feature 'user can create answer', %q{
   In order to answer to the question
   As an authenticated user
-  I'd like to be able to answer on question's page" do
+  I'd like to be able to answer on question's page
+} do
   given(:question) { create :question }
 
   describe 'Authenticated user' do

@@ -2,6 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_question, only: %w[new create]
   before_action :set_answer, only: %w[update destroy]
+  before_action :authorize!, only: %w[update destroy]
 
   def new
     @answer = @question.answers.new
@@ -35,6 +36,12 @@ class AnswersController < ApplicationController
 
   def set_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def authorize!
+    if @answer.user != current_user
+      redirect_to questions_path, notice: 'restricted access'
+    end
   end
 
   def answer_params

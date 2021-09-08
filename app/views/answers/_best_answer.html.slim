@@ -1,5 +1,5 @@
 p.box id="best_answer-#{best_answer.id}"
-  | #{best_answer.body}
+  | Best Answer: #{best_answer.body}
   - if best_answer.user == current_user
     = link_to 'Edit', '#', class: 'edit-answer button is-text', data: { answer_id: best_answer.id }
     = link_to 'Delete answer', answer_path(best_answer), method: :delete, remote: true, class: 'button is-text'

@@ -1,5 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %w[index show]
+  before_action :authorize!, only: %w[update destroy best_answer]
+
   def index
     @questions = Question.all
     @count = Question.count
@@ -44,6 +46,12 @@ class QuestionsController < ApplicationController
 
   def question
     @question ||= params[:id] ? Question.find(params[:id]) : Question.new
+  end
+
+  def authorize!
+    if question.user != current_user
+      redirect_to questions_path, notice: 'restricted access'
+    end
   end
 
   helper_method :question

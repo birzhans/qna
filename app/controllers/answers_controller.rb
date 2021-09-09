@@ -29,12 +29,13 @@ class AnswersController < ApplicationController
   end
 
   def best
-    if current_user.not_author_of? @answer.question
+    if current_user.author_of? @answer.question
+      @question = @answer.question
+      @previous_best_answer = @question.best_answer
+      @question.update(best_answer_id: @answer.id)
+    else
       redirect_to questions_path, notice: 'restricted access'
     end
-    @question = @answer.question
-    @previous_best_answer = @question.best_answer
-    @question.update(best_answer_id: @answer.id)
   end
 
   private

@@ -8,4 +8,12 @@ class User < ApplicationRecord
          :recoverable,
          :rememberable,
          :validatable
+
+   def author_of?(resource)
+     id == resource.user.id
+   end
+
+   def not_author_of?(resource)
+     !author_of?(resource)
+   end
 end

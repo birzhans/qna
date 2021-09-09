@@ -96,6 +96,11 @@ RSpec.describe AnswersController, type: :controller do
           delete :destroy, params: { id: answer.id }, format: :js
         end.to change(Answer, :count).by(-1)
       end
+
+      it 'renders destroy template' do
+        delete :destroy, params: { id: answer.id }, format: :js
+        expect(response).to render_template :destroy
+      end
     end
 
     context "not author" do
@@ -106,6 +111,51 @@ RSpec.describe AnswersController, type: :controller do
         expect do
           delete :destroy, params: { id: answer.id }, format: :js
         end.not_to change(Answer, :count)
+      end
+
+      it 'redirects to questions' do
+        delete :destroy, params: { id: answer.id }, format: :js
+        expect(response).to redirect_to questions_path
+      end
+    end
+  end
+
+  describe "POST #best_answer" do
+    context "author" do
+      before { login user }
+
+      context "Question doesn't have the best answer" do
+        let(:answer) { create(:answer, question: question, user: question.user) }
+        before { post :best, params: { id: answer.id }, format: :js }
+
+        it 'saves the best answer to question' do
+          question.reload
+          expect(question.best_answer_id).to eq answer.id
+        end
+      end
+
+      context "Question has the best answer" do
+        let(:answer) { create(:answer, question: question, user: question.user) }
+        let(:other_answer) { create(:answer, question: question, user: user) }
+        before do
+          question.update(best_answer: answer)
+          post :best, params: { id: other_answer.id }, format: :js
+        end
+
+        it 'saves the best answer to question' do
+          question.reload
+          expect(question.best_answer_id).to eq other_answer.id
+        end
+      end
+    end
+
+    context "not author" do
+      let(:answer) { create(:answer, question: question, user: user) }
+      before { post :best, params: { id: answer.id }, format: :js }
+
+      it 'does not save the best answer to question' do
+        question.reload
+        expect(question.best_answer_id).to eq nil
       end
     end
   end

@@ -1,6 +1,0 @@
-$('#best-answer').html("<%= j render('answers/best_answer', best_answer: @best_answer) %>")
-$('p#answer-' + '<%= @best_answer.id %>').remove()
-
-<% if @previous_best_answer %>
-  $('.answers').append("<%= j render(@previous_best_answer) %>")
-<% end %>

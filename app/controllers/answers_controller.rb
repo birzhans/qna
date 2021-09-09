@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_question, only: %w[new create]
-  before_action :set_answer, only: %w[update destroy]
+  before_action :set_answer, only: %w[update destroy best]
   before_action :authorize!, only: %w[update destroy]
 
   def new
@@ -28,6 +28,15 @@ class AnswersController < ApplicationController
     flash[:notice] = 'Answer was successfully deleted.'
   end
 
+  def best
+    if current_user.not_author_of? @answer.question
+      redirect_to questions_path, notice: 'restricted access'
+    end
+    @question = @answer.question
+    @previous_best_answer = @question.best_answer
+    @question.update(best_answer_id: @answer.id)
+  end
+
   private
 
   def set_question
@@ -39,7 +48,7 @@ class AnswersController < ApplicationController
   end
 
   def authorize!
-    if @answer.user != current_user
+    if current_user.not_author_of? @answer
       redirect_to questions_path, notice: 'restricted access'
     end
   end

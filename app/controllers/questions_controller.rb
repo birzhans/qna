@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %w[index show]
-  before_action :authorize!, only: %w[update destroy best_answer]
+  before_action :authorize!, only: %w[update destroy]
 
   def index
     @questions = Question.all
@@ -36,12 +36,6 @@ class QuestionsController < ApplicationController
     redirect_to questions_path, notice: 'Question was successfully deleted.'
   end
 
-  def best_answer
-    @previous_best_answer = question.best_answer
-    @best_answer = Answer.find(params[:answer_id])
-    question.update(best_answer_id: @best_answer.id)
-  end
-
   private
 
   def question
@@ -49,7 +43,7 @@ class QuestionsController < ApplicationController
   end
 
   def authorize!
-    if question.user != current_user
+    if current_user.not_author_of? question
       redirect_to questions_path, notice: 'restricted access'
     end
   end

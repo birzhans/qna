@@ -1,8 +1,8 @@
 p id="answer-#{answer.id}"
   | #{answer.body}
-  - if answer.question.user == current_user
-    = link_to 'Mark Best', best_answer_question_path(answer.question, answer_id: answer), remote: true, method: :post, class: 'button is-text'
-  - if answer.user == current_user
-    = link_to 'Edit', '#', class: 'edit-answer button is-text', data: { answer_id: answer.id } 
+  - if current_user && current_user.author_of?(answer.question)
+    = link_to 'Mark Best', best_answer_path(answer), remote: true, method: :post, class: 'button is-text'
+  - if current_user && current_user.author_of?(answer)
+    = link_to 'Edit', '#', class: 'edit-answer button is-text', data: { answer_id: answer.id }
     = link_to 'Delete Answer', answer_path(answer), method: :delete, remote: true, class: 'button is-text'
     = render 'answers/form', answer: answer

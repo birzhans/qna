@@ -137,46 +137,10 @@ RSpec.describe QuestionsController, type: :controller do
       it 'does not delete the question' do
         expect { delete :destroy, params: { id: question } }.not_to change(Question, :count)
       end
-    end
-  end
 
-  describe "POST #best_answer" do
-    context "author" do
-      before { login question.user }
-
-      context "Question doesn't have the best answer" do
-        let(:answer) { create(:answer, question: question, user: question.user) }
-        before { post :best_answer, params: { id: question.id, answer_id: answer.id }, format: :js }
-
-        it 'saves the best answer to question' do
-          question.reload
-          expect(question.best_answer_id).to eq answer.id
-        end
-      end
-
-      context "Question has the best answer" do
-        let(:answer) { create(:answer, question: question, user: question.user) }
-        let(:other_answer) { create(:answer, question: question, user: user) }
-        before do
-          question.update(best_answer: answer)
-          post :best_answer, params: { id: question.id, answer_id: other_answer.id }, format: :js
-        end
-
-        it 'saves the best answer to question' do
-          question.reload
-          expect(question.best_answer_id).to eq other_answer.id
-        end
-      end
-    end
-
-    context "not author" do
-      before { login user }
-      let(:answer) { create(:answer, question: question, user: question.user) }
-      before { post :best_answer, params: { id: question.id, answer_id: answer.id }, format: :js }
-
-      it 'does not save the best answer to question' do
-        question.reload
-        expect(question.best_answer_id).to eq nil
+      it 'redirects to index view' do
+        delete :destroy, params: { id: question }, format: :js
+        expect(response).to redirect_to questions_path
       end
     end
   end

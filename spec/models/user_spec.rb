@@ -10,11 +10,11 @@ RSpec.describe User, type: :model do
     let(:question) { create(:question, user: user) }
 
     it "returns true for resource author" do
-      expect(user.author_of?(question)).to eq true
+      expect(user).to be_author_of(question)
     end
 
     it "returns false for another user" do
-      expect(another_user.author_of?(question)).to eq false
+      expect(another_user).not_to be_author_of(question)
     end
   end
 end

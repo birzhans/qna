@@ -1,0 +1,6 @@
+$('.answer-errors').html("<%= j render('shared/errors', resource: @answer) %>")
+<% if @answer.persisted? %>
+  $('.notifications').html("<%= j render('shared/notifications') %>")
+  $('.answers').append('<%= j render(@answer) %>')
+  $('#new-answer-body').val('')
+<% end %>

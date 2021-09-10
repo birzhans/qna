@@ -1,5 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %w[index show]
+  before_action :authorize!, only: %w[update destroy]
+
   def index
     @questions = Question.all
     @count = Question.count
@@ -7,6 +9,8 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @best_answer = question.best_answer
+    @answers = question.answers.where.not(id: @question.best_answer_id)
   end
 
   def new; end
@@ -24,11 +28,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if question.update(question_params)
-      redirect_to question
-    else
-      render :edit
-    end
+    question.update(question_params)
   end
 
   def destroy
@@ -40,6 +40,12 @@ class QuestionsController < ApplicationController
 
   def question
     @question ||= params[:id] ? Question.find(params[:id]) : Question.new
+  end
+
+  def authorize!
+    if current_user.not_author_of? question
+      redirect_to questions_path, notice: 'restricted access'
+    end
   end
 
   helper_method :question

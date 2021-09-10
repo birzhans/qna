@@ -1,6 +1,6 @@
 
 env:
-  RUBY_VERSION: 2.7.0
+  RUBY_VERSION: 2.7.2
   POSTGRES_USER: dev
   POSTGRES_PASSWORD: hard_password
 

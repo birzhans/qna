@@ -1,0 +1,10 @@
+<% if !@question.errors.present? %>
+  $('.notifications').html("<%= j render('shared/notifications', notice: 'Question edited') %>")
+  $("#question-title").html('<%= j @question.title %>')
+  $("#question-body").html('<%= j @question.body %>')
+
+  $("form#edit-question-" + "<%= j @question.id %>").hide()
+  $("#edit-question").show()
+<% else %>
+  $('#question-errors').html("<%= j render('shared/errors', resource: @question) %>")
+<% end %>

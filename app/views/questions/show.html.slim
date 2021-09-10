@@ -1,24 +1,29 @@
-p class='is-size-1' = question.title
-p class='subtitle' =  question.body
-.container
-  ol
-    -question.answers.each do |answer|
-      li
-        p
-          | #{answer.body}
-          - if answer.user_id.eql?(current_user&.id)
-            br
-            =link_to 'Delete Answer', answer_path(answer), method: :delete, data: { confirm: 'Confirm' }
+= link_to 'All Questions', questions_path
 
-=form_with model: @answer,
-           url: question_answers_path(question),
-           html: {method: :post},
-           local: true do |form|
-  p
-    = form.label 'Your Answer'
-  p
-    = form.text_area :body, id: 'Body'
-  = form.submit 'Post', class: 'button is-link'
+p#question-errors
+p.is-size-1#question-title
+  = question.title
+p.subtitle#question-body
+  = question.body
+  - if current_user&.author_of?(question)
+    .buttons
+      = link_to 'Edit', edit_question_path(question), class: 'button is-light',
+                id: 'edit-question', data: { 'question-id': question.id }
+      = render 'form', question: question
+      = link_to 'Delete', question_path(question), method: :delete, class: 'button is-warning'
 
-- if question.user_id.eql?(current_user&.id)
-  =link_to 'Delete', question_path(question), method: :delete, data: { confirm: 'Confirm' }
+.container#best-answer
+  - if @best_answer
+    = render 'answers/best_answer', best_answer: @best_answer
+
+.container.answers
+  = render @answers
+
+.answer-errors
+  = render 'shared/errors', resource: @answer
+
+= form_with model: [question, @answer], class: 'new-answer', local: false do |f|
+  p
+    = f.label :body, 'Your answer'
+    = f.text_area :body, id: "new-answer-body"
+  = f.submit 'Create'

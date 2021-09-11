@@ -16,7 +16,13 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer.update(answer_params)
+    if @answer.update(answer_params.except(:files))
+      if answer_params[:files].present?
+        answer_params[:files].each do |file|
+          @answer.files.attach(file)
+        end
+      end
+    end
     @question = @answer.question
     flash[:notice] = "Your answer #{@answer.body} successfully updated."
   end

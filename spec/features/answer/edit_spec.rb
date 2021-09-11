@@ -36,6 +36,18 @@ feature 'User can edit his answer', %q{
       end
     end
 
+    scenario 'Adds files to answer', js: true do
+      visit question_path(question)
+      click_on 'Edit'
+
+      within '.answers' do
+        fill_in 'answer_body', with: 'edited answer'
+        attach_file 'File', "#{Rails.root}/package.json"
+        click_on 'Save'
+        expect(page).to have_content('package.json', wait: 0.1)
+      end
+    end
+
     scenario 'edits his answer with errors', js: true do
       visit question_path(question)
       click_on 'Edit'

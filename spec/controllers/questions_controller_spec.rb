@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
-  let(:question) { create(:question) }
+  let(:question) { create(:question, :has_attached_file) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3) }
@@ -141,6 +141,28 @@ RSpec.describe QuestionsController, type: :controller do
       it 'redirects to index view' do
         delete :destroy, params: { id: question }, format: :js
         expect(response).to redirect_to questions_path
+      end
+    end
+  end
+
+  describe "DELETE #delete_file" do
+    context "author" do
+      before { login question.user }
+
+      it 'deletes existing file' do
+        expect do
+          delete :delete_file, params: { id: question, file_id: question.files.first.id }
+        end.to change(question.files, :count).by(-1)
+      end
+    end
+
+    context "not author" do
+      before { login user }
+
+      it 'deletes existing file' do
+        expect do
+          delete :delete_file, params: { id: question, file_id: question.files.first.id }
+        end.not_to change(question.files, :count)
       end
     end
   end

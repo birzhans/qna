@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %w[index show]
-  before_action :set_question, only: %w[show update destroy]
-  before_action :authorize!, only: %w[update destroy]
+  before_action :set_question, only: %w[show update destroy delete_file]
+  before_action :authorize!, only: %w[update destroy delete_file]
 
   def index
     @questions = Question.all
@@ -41,6 +41,11 @@ class QuestionsController < ApplicationController
   def destroy
     @question.destroy
     redirect_to questions_path, notice: 'Question was successfully deleted.'
+  end
+
+  def delete_file
+    @file_id = params[:file_id]
+    @question.files.find(params[:file_id]).purge
   end
 
   private

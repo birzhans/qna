@@ -39,6 +39,19 @@ I'd like to be able to edit own questions
       expect(page).to have_content('package.json', wait: 0.1)
     end
 
+    scenario 'Deletes file from question', js: true do
+      visit question_path(question)
+      click_on 'Edit'
+      fill_in 'question_body', with: 'Edited question'
+
+      within "#edit-question-#{question.id}" do
+        attach_file 'File', "#{Rails.root}/package.json"
+        click_on 'Save'
+      end
+
+      expect(page).to have_content('package.json', wait: 0.1)
+    end
+
     scenario 'Edits his question with errors', js: true do
       visit question_path(question)
       click_on 'Edit'

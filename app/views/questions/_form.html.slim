@@ -3,11 +3,13 @@
   .field
     = form.label :title
     = form.text_area :title, class: 'input'
+
   .field
     = form.label :body
     = form.text_area :body, class: 'input'
+
   .field
-    = form.label :file
-    = form.file_field :file
+    = form.label :files
+    = form.file_field :files, multiple: true
   .field
     = form.submit 'Save', class: 'button'

@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %w[index show]
-  before_action :set_question, only: %w[show edit update destroy]
-  before_action :authorize!, only: %w[edit update destroy]
+  before_action :set_question, only: %w[show update destroy]
+  before_action :authorize!, only: %w[update destroy]
 
   def index
     @questions = Question.all
@@ -18,8 +18,6 @@ class QuestionsController < ApplicationController
     @question = current_user.questions.new
   end
 
-  def edit; end
-
   def create
     @question = current_user.questions.new(question_params)
 
@@ -31,7 +29,13 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params)
+    if @question.update(question_params.except(:files))
+      if question_params[:files].present?
+        question_params[:files].each do |file|
+          @question.files.attach(file)
+        end
+      end
+    end
   end
 
   def destroy

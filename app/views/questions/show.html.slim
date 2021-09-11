@@ -5,9 +5,8 @@ p.is-size-1#question-title
   = @question.title
 p.subtitle#question-body
   = @question.body
-- if @question.files.attached?
-  - @question.files.each do |file|
-    p = link_to file.filename.to_s, file
+.subtitle#question-files
+  = render 'files', question: @question
 - if current_user&.author_of?(@question)
   .buttons
     = link_to 'Edit', edit_question_path(@question), class: 'button is-light',

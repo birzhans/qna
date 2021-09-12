@@ -1,2 +1,7 @@
 $('.notifications').html("<%= j render('shared/notifications') %>")
-$('#answer-' + '<%= @answer.id %>').remove()
+
+<% if @answer.best? %>
+  $('#best-answer').html('')
+<% else %>
+  $('#answer-' + '<%= @answer.id %>').remove()
+<% end %>

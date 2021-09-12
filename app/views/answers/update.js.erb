@@ -2,5 +2,10 @@ $('.answer-errors').html("<%= j render('shared/errors', resource: @answer) %>")
 
 <% if !@answer.errors.present? %>
   $('.notifications').html("<%= j render('shared/notifications') %>")
-  $('.answers').html('<%= j render(@question.answers) %>')
+
+  <% if @answer.best? %>
+    $('#best-answer').html("<%= j render('best_answer', best_answer: @answer) %>")
+  <% else %>
+    $('.answers').html('<%= j render(@question.answers_without_best) %>')
+  <% end %>
 <% end %>

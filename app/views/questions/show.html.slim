@@ -30,5 +30,5 @@ p.subtitle#question-body
     = f.text_area :body, id: "new-answer-body", class: 'input'
   .field
     = f.label :files
-    = f.file_field :files, multiple: true, class: 'button'
+    = f.file_field :files, multiple: true, class: 'button', id: 'new-answer-files'
   = f.submit 'Create'

@@ -151,7 +151,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'deletes existing file' do
         expect do
-          delete :delete_file, params: { id: question, file_id: question.files.first.id }
+          delete :delete_file, params: { id: question, file_id: question.files.first.id }, format: :js
         end.to change(question.files, :count).by(-1)
       end
     end
@@ -161,7 +161,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'deletes existing file' do
         expect do
-          delete :delete_file, params: { id: question, file_id: question.files.first.id }
+          delete :delete_file, params: { id: question, file_id: question.files.first.id }, format: :js
         end.not_to change(question.files, :count)
       end
     end

@@ -1,8 +1,8 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_question, only: %w[new create]
-  before_action :set_answer, only: %w[update destroy best]
-  before_action :authorize!, only: %w[update destroy]
+  before_action :set_answer, only: %w[update destroy best delete_file]
+  before_action :authorize!, only: %w[update destroy delete_file]
 
   def new
     @answer = @question.answers.new
@@ -42,6 +42,11 @@ class AnswersController < ApplicationController
     else
       redirect_to questions_path, notice: 'restricted access'
     end
+  end
+
+  def delete_file
+    @file_id = params[:file_id]
+    @answer.files.find(params[:file_id]).purge
   end
 
   private

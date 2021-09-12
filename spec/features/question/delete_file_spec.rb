@@ -5,8 +5,9 @@ As authenticated user
 I'd like to be able to delete file from my question
 } do
   given(:user) { create(:user) }
-  given(:another_user) { create(:user) }
   given(:question) { create(:question, :has_attached_file, user: user) }
+
+  given(:another_user) { create(:user) }
   given(:another_question) { create(:question, :has_attached_file, user: another_user) }
 
   describe "Authenticated user" do
@@ -14,7 +15,7 @@ I'd like to be able to delete file from my question
 
     scenario 'Deletes existing file', js: true do
       visit question_path(question)
-      within('#question-files') do
+      within("#question-files") do
         expect(page).to have_content 'Delete'
 
         click_on 'Delete'

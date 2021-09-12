@@ -2,7 +2,7 @@
   $('.notifications').html("<%= j render('shared/notifications', notice: 'Question edited') %>")
   $("#question-title").html('<%= j @question.title %>')
   $("#question-body").html('<%= j @question.body %>')
-  $("#question-files").html('<%= j render('files', question: @question) %>')
+  $("#question-files").html("<%= j render('files', question: @question) %>")
 
   $("form#edit-question-" + "<%= j @question.id %>").hide()
   $("#edit-question").show()

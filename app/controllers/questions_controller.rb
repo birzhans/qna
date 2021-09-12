@@ -11,7 +11,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = Answer.new
     @best_answer = @question.best_answer
-    @answers = @question.answers.where.not(id: @question.best_answer_id)
+    @answers = @question.answers_without_best
   end
 
   def new

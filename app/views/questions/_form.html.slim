@@ -10,6 +10,6 @@
 
   .field
     = form.label :files
-    = form.file_field :files, multiple: true
+    = form.file_field :files, multiple: true, direct_upload: true
   .field
     = form.submit 'Save', class: 'button'

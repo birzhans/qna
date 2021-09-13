@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %w[index show]
+  before_action :set_question, only: %w[show update destroy]
   before_action :authorize!, only: %w[update destroy]
 
   def index
@@ -9,13 +10,13 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
-    @best_answer = question.best_answer
-    @answers = question.answers.where.not(id: @question.best_answer_id)
+    @best_answer = @question.best_answer
+    @answers = @question.answers_without_best
   end
 
-  def new; end
-
-  def edit; end
+  def new
+    @question = current_user.questions.new
+  end
 
   def create
     @question = current_user.questions.new(question_params)
@@ -28,29 +29,33 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    question.update(question_params)
+    if @question.update(question_params.except(:files))
+      if question_params[:files].present?
+        question_params[:files].each do |file|
+          @question.files.attach(file)
+        end
+      end
+    end
   end
 
   def destroy
-    question.destroy
+    @question.destroy
     redirect_to questions_path, notice: 'Question was successfully deleted.'
   end
 
   private
 
-  def question
-    @question ||= params[:id] ? Question.find(params[:id]) : Question.new
+  def set_question
+    @question = Question.with_attached_files.find(params[:id])
   end
 
   def authorize!
-    if current_user.not_author_of? question
+    if current_user.not_author_of? @question
       redirect_to questions_path, notice: 'restricted access'
     end
   end
 
-  helper_method :question
-
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, files: [])
   end
 end

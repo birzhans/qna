@@ -33,6 +33,8 @@ gem 'jquery-rails'
 # AUTH
 gem 'devise'
 
+gem "aws-sdk-s3"
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

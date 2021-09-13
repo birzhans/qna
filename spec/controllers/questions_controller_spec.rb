@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
-  let(:question) { create(:question) }
+  let(:question) { create(:question, :has_attached_file) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3) }

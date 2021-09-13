@@ -14,9 +14,8 @@ feature 'Question author can choose best question', %q{
   scenario 'Authenticated user chooses the best answer', js: true do
     login(user)
     visit question_path(question)
-    within("#answer-#{answer.id}") { click_on 'Mark Best' }
-    within('#best-answer') { expect(page).to(have_content(answer.body, wait: 0.1)) }
-    within('.answers') { expect(page).not_to(have_content(answer.body, wait: 0.1)) }
+    within("answer-#{answer.id}") { click_on 'Mark Best' }
+    within('best-answer') { expect(page).to(have_content(answer.body, wait: 0.1)) }
 
   end
 
@@ -34,7 +33,7 @@ feature 'Question author can choose best question', %q{
   scenario 'Authenticated user tries to choose the best answer for question without authorship', js: true do
     login(user)
     visit question_path(another_question)
-    expect(page).not_to have_content('Mark Best')
+    expect(page).not_to have_content('Mark Best', wait: 0.1)
 
   end
 end

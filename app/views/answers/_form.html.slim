@@ -1,5 +1,10 @@
 = form_with model: answer, local: false, class: 'hidden',
             html: { id: "edit-answer-#{answer.id}" } do |form|
-  = form.text_area :body
-  = form.submit 'Save', class: 'button'
-  = link_to 'Close', '#', class: 'button close-answer-edit'
+  .field
+    = form.text_area :body
+  .field
+    = form.label :files
+    = form.file_field :files, multiple: true, direct_upload: true
+  .field
+    = form.submit 'Save', class: 'button'
+    = link_to 'Close', '#', class: 'button close-answer-edit'

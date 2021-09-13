@@ -1,8 +1,15 @@
 = form_with model: question, local: false, class: 'hidden box',
             html: { id: "edit-question-#{question.id}" } do |form|
   .field
+    = form.label :title
     = form.text_area :title, class: 'input'
+
   .field
+    = form.label :body
     = form.text_area :body, class: 'input'
+
+  .field
+    = form.label :files
+    = form.file_field :files, multiple: true, direct_upload: true
   .field
     = form.submit 'Save', class: 'button'

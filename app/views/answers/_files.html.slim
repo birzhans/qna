@@ -1,0 +1,8 @@
+- if answer.files.attached?
+  - answer.files.each do |file|
+    div id="file-#{file.id}"
+      = link_to file.filename.to_s, file
+
+      - if current_user&.author_of?(answer)
+        = link_to 'Delete File', file_path(id: file.id),
+                   method: :delete, remote: true, class: 'button'

@@ -4,5 +4,5 @@
       = link_to file.filename.to_s, file
 
       - if current_user&.author_of?(question)
-        = link_to 'Delete', delete_file_question_path(question, file_id: file.id),
+        = link_to 'Delete', file_path(id: file.id),
                    method: :delete, remote: true, class: 'button'

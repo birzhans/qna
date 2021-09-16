@@ -9,6 +9,6 @@ class Question < ApplicationRecord
   validates :title, :body, presence: true
 
   def answers_without_best
-    answers.where('id != ?', best_answer_id)
+    best_answer_id ? answers.where('id != ?', best_answer_id) : answers
   end
 end

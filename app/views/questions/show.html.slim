@@ -1,12 +1,23 @@
 = link_to 'All Questions', questions_path
 
 p#question-errors
+
 p.is-size-1#question-title
   = @question.title
+
 p.subtitle#question-body
   = @question.body
+
 .subtitle#question-files
   = render 'files', question: @question
+
+#question-links
+  - if @question.links.present?
+    p Links:
+    ul
+      - @question.links.each do |link|
+        li= link_to link.name, link.url
+
 - if current_user&.author_of?(@question)
   .buttons
     = link_to 'Edit', edit_question_path(@question), class: 'button is-light',

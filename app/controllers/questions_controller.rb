@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @answer.links.new
     @best_answer = @question.best_answer
     @answers = @question.answers_without_best
   end

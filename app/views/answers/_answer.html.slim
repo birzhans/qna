@@ -3,14 +3,10 @@ div id="answer-#{answer.id}"
   .subtitle#answer-files
     = render 'answers/files', answer: answer
   #answer-links
-    - if answer.links.present?
-      p Links:
-      ul
-        - answer.links.each do |link|
-          li= link_to link.name, link.url
+    = render 'shared/links', resource: answer
   - if current_user&.author_of?(answer.question)
     = link_to 'Mark Best', best_answer_path(answer), remote: true, method: :post, class: 'button is-text'
   - if current_user&.author_of?(answer)
     = link_to 'Edit', '#', class: 'edit-answer button is-text', data: { answer_id: answer.id }
     = link_to 'Delete Answer', answer_path(answer), method: :delete, remote: true, class: 'button is-text'
-    = render 'answers/form', answer: answer
+    = render 'answers/edit_form', answer: answer

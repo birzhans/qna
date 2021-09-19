@@ -29,6 +29,7 @@ gem 'slim-rails'
 gem 'bulma-rails', '~> 0.8.0'
 
 gem 'jquery-rails'
+gem 'cocoon'
 
 # AUTH
 gem 'devise'

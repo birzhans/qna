@@ -10,6 +10,8 @@ import "./answers.js"
 import "./questions.js"
 import "./direct_uploads.js"
 
+require("jquery")
+require("@nathanvda/cocoon")
 
 Rails.start()
 Turbolinks.start()

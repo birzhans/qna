@@ -5,11 +5,11 @@ feature 'User can delete links from question', %q{
   I'd like to be able to delete links
 } do
   given(:user) { create(:user) }
-  given(:gist_url) { 'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c' }
-  given(:question) { create(:question, user: user, links: [Link.new(name: 'link1', url: gist_url)]) }
+  given(:google_url) { 'https://www.google.com/?client=safari' }
+  given(:question) { create(:question, user: user, links: [Link.new(name: 'link1', url: google_url)]) }
 
   given(:another_user) { create(:user) }
-  given(:another_question) { create(:question, user: another_user, links: [Link.new(name: 'link1', url: gist_url)] ) }
+  given(:another_question) { create(:question, user: another_user, links: [Link.new(name: 'link1', url: google_url)] ) }
   describe 'Authenticated user' do
     background do
       login user

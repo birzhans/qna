@@ -5,11 +5,9 @@ feature 'User can edit question links', %q{
   I'd like to be able to edit links
 } do
   given(:user) { create(:user) }
-  given(:gist_url) { 'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c' }
+  given(:google_url) { 'https://www.google.com/?client=safari' }
   given(:question) { create(:question, user: user) }
 
-  given(:another_user) { create(:user) }
-  given(:another_question) { create(:question, user: another_user, links: [Link.new(name: 'link1', url: gist_url)] ) }
   describe 'Authenticated user' do
     background do
       login user
@@ -21,7 +19,7 @@ feature 'User can edit question links', %q{
       within '#edit-question-links' do
         click_on 'add link'
         fill_in 'Name', with: 'Link 1'
-        fill_in 'Url', with: gist_url
+        fill_in 'Url', with: google_url
       end
 
       click_on 'Save'

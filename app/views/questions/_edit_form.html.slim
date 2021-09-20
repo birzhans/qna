@@ -11,5 +11,8 @@
   .field
     = form.label :files
     = form.file_field :files, multiple: true, direct_upload: true
+
+  .field#edit-question-links
+    = render 'links/new_links', f: form
   .field
     = form.submit 'Save', class: 'button'

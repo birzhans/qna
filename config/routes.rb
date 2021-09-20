@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   end
 
   resources :files, only: %w[destroy]
+  resources :links, only: %w[destroy]
   get 'user', to: 'users#show'
 end

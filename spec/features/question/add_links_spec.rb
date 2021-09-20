@@ -27,7 +27,7 @@ feature 'User can add links to question', %q{
       expect(page).to have_link 'Link 1', href: gist_url
     end
 
-    scenario 'User adds link when asks question' do
+    scenario 'User adds invalid link when asks question' do
       within('#new-links') do
         fill_in 'Name', with: 'Link 1'
         fill_in 'Url', with: 'invalid link'

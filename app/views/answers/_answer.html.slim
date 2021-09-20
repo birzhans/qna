@@ -3,7 +3,7 @@ div id="answer-#{answer.id}"
   .subtitle#answer-files
     = render 'answers/files', answer: answer
   #answer-links
-    = render 'shared/links', resource: answer
+    = render 'links/links', resource: answer
   - if current_user&.author_of?(answer.question)
     = link_to 'Mark Best', best_answer_path(answer), remote: true, method: :post, class: 'button is-text'
   - if current_user&.author_of?(answer)

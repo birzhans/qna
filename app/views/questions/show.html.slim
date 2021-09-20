@@ -13,7 +13,7 @@ p.subtitle#question-body
 
 #question-links
   - if @question.links.present?
-    = render 'shared/links', resource: @question
+    = render 'links/links', resource: @question
 
 - if current_user&.author_of?(@question)
   .buttons

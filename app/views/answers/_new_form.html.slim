@@ -1,0 +1,10 @@
+= form_with model: [question, answer], class: 'new-answer box', local: false do |f|
+  .field
+    = f.label :body, 'Your answer'
+    = f.text_area :body, id: "new-answer-body", class: 'input'
+  .field
+    = f.label :files
+    = f.file_field :files, multiple: true, direct_upload: true, class: 'button', id: 'new-answer-files'
+
+  = render 'links/new_links', f: f
+  = f.submit 'Create'

@@ -1,17 +1,29 @@
 = link_to 'All Questions', questions_path
 
 p#question-errors
+
 p.is-size-1#question-title
   = @question.title
+
 p.subtitle#question-body
   = @question.body
+
 .subtitle#question-files
   = render 'files', question: @question
+
+- if @question.reward
+  .subtitle#question-reward
+    = render 'reward', reward: @question.reward
+
+#question-links
+  - if @question.links.present?
+    = render 'links/links', resource: @question
+
 - if current_user&.author_of?(@question)
   .buttons
     = link_to 'Edit', edit_question_path(@question), class: 'button is-light',
               id: 'edit-question', data: { 'question-id': @question.id }
-    = render 'form', question: @question
+    = render 'edit_form', question: @question
     = link_to 'Delete', question_path(@question), method: :delete, class: 'button is-warning'
 
 .container#best-answer
@@ -24,11 +36,4 @@ p.subtitle#question-body
 .answer-errors
   = render 'shared/errors', resource: @answer
 
-= form_with model: [@question, @answer], class: 'new-answer box', local: false do |f|
-  .field
-    = f.label :body, 'Your answer'
-    = f.text_area :body, id: "new-answer-body", class: 'input'
-  .field
-    = f.label :files
-    = f.file_field :files, multiple: true, direct_upload: true, class: 'button', id: 'new-answer-files'
-  = f.submit 'Create'
+= render 'answers/new_form', question: @question, answer: @answer

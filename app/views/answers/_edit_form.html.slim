@@ -5,6 +5,8 @@
   .field
     = form.label :files
     = form.file_field :files, multiple: true, direct_upload: true
+  .field#edit-answer-links
+    = render 'links/new_links', f: form
   .field
     = form.submit 'Save', class: 'button'
     = link_to 'Close', '#', class: 'button close-answer-edit'

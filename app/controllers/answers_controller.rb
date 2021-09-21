@@ -37,6 +37,7 @@ class AnswersController < ApplicationController
   def best
     if current_user.author_of?(@answer.question)
       @question = @answer.question
+      @question.reward_user(@answer.user_id)
       @previous_best_answer = @question.best_answer
       @question.update(best_answer_id: @answer.id)
     else

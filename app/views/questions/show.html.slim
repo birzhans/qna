@@ -11,6 +11,10 @@ p.subtitle#question-body
 .subtitle#question-files
   = render 'files', question: @question
 
+- if @question.reward
+  .subtitle#question-reward
+    = render 'reward', reward: @question.reward
+
 #question-links
   - if @question.links.present?
     = render 'links/links', resource: @question

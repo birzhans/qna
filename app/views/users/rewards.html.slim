@@ -1,0 +1,9 @@
+.title = "#{current_user.email} rewards"
+
+.box
+  - current_user.rewards.each do |reward|
+    div
+      p = "Question: #{reward.question.title}"
+      p = reward.name
+      = image_tag reward.image, width: 200
+      hr

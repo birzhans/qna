@@ -152,10 +152,4 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
-
-  describe "POST #upvote" do
-    context "Unauthenticated user" do
-      
-    end
-  end
 end

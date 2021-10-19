@@ -2,11 +2,8 @@
 
 p#question-errors
 
-.is-size-1
-  #question-vote
-    = link_to 'Up', upvote_question_path(@question), format: :json, method: :post, id: 'vote-up-btn'
-  #question-title
-    = @question.title
+p.is-size-1#question-title
+  = @question.title
 
 p.subtitle#question-body
   = @question.body

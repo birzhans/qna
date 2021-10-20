@@ -27,6 +27,7 @@ gem 'slim-rails'
 
 # UI
 gem 'bulma-rails', '~> 0.8.0'
+gem "font-awesome-rails"
 
 gem 'jquery-rails'
 gem 'cocoon'

@@ -3,9 +3,6 @@ Rails.application.routes.draw do
   root to: 'questions#index'
 
   resources :questions do
-    member do
-      post 'upvote'
-    end
     resources :answers, shallow: true do
       member do
         post 'best'
@@ -15,6 +12,8 @@ Rails.application.routes.draw do
 
   resources :files, only: %w[destroy]
   resources :links, only: %w[destroy]
+  resources :votes, only: %w[create]
+
   get 'user', to: 'users#show'
   get 'rewards', to: 'users#rewards'
 end

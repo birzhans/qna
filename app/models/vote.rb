@@ -4,14 +4,6 @@ class Vote < ApplicationRecord
 
   enum kind: { like: 1, dislike: -1 }
 
-  validate :author?
-
-  def author?
-     if user.author_of?(votable)
-       errors.add(:user_id, "Author can't vote")
-     end
-  end
-
   validates :kind,
             presence: true,
             numericality: true,

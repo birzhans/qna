@@ -3,16 +3,8 @@
 p#question-errors
 
 .is-size-1
-  #vote
-    = link_to votes_path(votable_id: @question, votable_type: 'Question', kind: 1),
-              remote: true, data: { type: :json }, method: :post, id: 'vote-up-btn', class: 'm-2' do
-      = fa_icon "thumbs-up"
-
-    = link_to votes_path(votable_id: @question, votable_type: 'Question', kind: -1),
-              remote: true, data: { type: :json }, method: :post, id: 'vote-down-btn', class: 'm-2' do
-      = fa_icon "thumbs-down"
-
-    = @question.vote_balance
+  #question-vote
+    = render 'shared/votes', votable: @question
   #question-title
     = @question.title
 

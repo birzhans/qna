@@ -7,7 +7,7 @@ class Vote < ApplicationRecord
   validate :author?
 
   def author?
-     if user.id == votable.user_id
+     if user.author_of?(votable)
        errors.add(:user_id, "Author can't vote")
      end
   end
@@ -26,5 +26,9 @@ class Vote < ApplicationRecord
 
   def update_votable_before_destroy
     votable.update(vote_balance: votable.vote_balance -= kind_before_type_cast)
+  end
+
+  def votable_balance
+    votable.vote_balance
   end
 end

@@ -1,0 +1,11 @@
+.votes
+  .errors
+  = link_to votes_path(votable_id: votable.id, votable_type: votable.class.to_s, kind: 1),
+            method: :post, remote: true, data: { type: :json }, id: 'like', class: 'm-2' do
+    = fa_icon "thumbs-up"
+
+  = link_to votes_path(votable_id: votable.id, votable_type: votable.class.to_s, kind: -1),
+            method: :post, remote: true, id: 'dislike', class: 'm-2', data: { type: :json } do
+    = fa_icon "thumbs-down"
+  #vote-balance
+    = votable.vote_balance

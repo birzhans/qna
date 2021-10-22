@@ -11,9 +11,9 @@ class VotesController < ApplicationController
     )
 
     if @vote.save
-      render json: @vote
+      render json: { kind: @vote.kind, vote_balance: @vote.votable_balance }
     else
-      render json: @vote.errors.full_messages
+      render json: @vote.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -26,6 +26,6 @@ class VotesController < ApplicationController
 
   def check_existence
     vote = Vote.find_by(votable_id: params[:votable_id], user_id: current_user.id)
-    redirect_to(vote.votable, notice: 'Already voted') if vote
+    render(json: 'Already voted', status: :unprocessable_entity) if vote
   end
 end

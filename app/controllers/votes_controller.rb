@@ -11,9 +11,18 @@ class VotesController < ApplicationController
     )
 
     if @vote.save
-      render json: { kind: @vote.kind, vote_balance: @vote.votable_balance }
+      render json: {
+        kind: @vote.kind,
+        vote_balance: @vote.votable_balance,
+        type: @vote.votable_type,
+        id: @vote.votable_id
+      }
     else
-      render json: @vote.errors.full_messages, status: :unprocessable_entity
+      render json: {
+        type: @vote.votable_type,
+        id: @vote.votable_id,
+        messages: @vote.errors.full_messages },
+      status: :unprocessable_entity
     end
   end
 
@@ -26,13 +35,23 @@ class VotesController < ApplicationController
     @votable = @vote.votable
     @vote.destroy
 
-    render json: { vote_balance: @votable.vote_balance }
+    render json: {
+      vote_balance: @votable.vote_balance,
+      type: @vote.votable_type,
+      id: @vote.votable_id
+    }
   end
 
   private
 
   def check_existence
-    vote = Vote.find_by(votable_id: params[:votable_id], user_id: current_user.id)
-    render(json: 'Already voted', status: :unprocessable_entity) if vote
+    @vote = Vote.find_by(votable_id: params[:votable_id], user_id: current_user.id)
+    render(
+      json: {
+        type: @vote.votable_type,
+        id: @vote.votable_id,
+        messages: 'Already voted'
+      },
+      status: :unprocessable_entity) if @vote
   end
 end

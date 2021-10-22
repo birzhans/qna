@@ -38,7 +38,6 @@ feature 'User can edit vote answer', %q{
   scenario 'Authenticated user tries to vote question second time', js: true do
     login(user)
     Vote.create!(votable: question, user: user, kind: 1)
-    expect(Vote.count).to eq 1
     visit question_path(question)
     click_on 'like'
 
@@ -48,7 +47,6 @@ feature 'User can edit vote answer', %q{
   scenario 'Authenticated user can cancel vote', js: true do
     login(user)
     Vote.create!(votable: question, user: user, kind: 1)
-    expect(Vote.count).to eq 1
     visit question_path(question)
     click_on 'Cancel'
     click_on 'like'

@@ -1,4 +1,5 @@
 div id="answer-#{answer.id}"
+  = render 'shared/votes', votable: answer
   | #{answer.body}
   .subtitle#answer-files
     = render 'answers/files', answer: answer

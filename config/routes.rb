@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :files, only: %w[destroy]
   resources :links, only: %w[destroy]
-  resources :votes, only: %w[create]
+  resources :votes, only: %w[create destroy]
 
   get 'user', to: 'users#show'
   get 'rewards', to: 'users#rewards'

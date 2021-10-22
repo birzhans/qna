@@ -18,8 +18,15 @@ class VotesController < ApplicationController
   end
 
   def destroy
-    @vote = Vote.find_by(params[:id])
+    @vote = Vote.find_by(
+              votable_id: params[:votable_id],
+              votable_type: params[:votable_type],
+              user: current_user
+            )
+    @votable = @vote.votable
     @vote.destroy
+
+    render json: { vote_balance: @votable.vote_balance }
   end
 
   private

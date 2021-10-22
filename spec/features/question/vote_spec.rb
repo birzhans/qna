@@ -10,21 +10,48 @@ feature 'User can edit vote answer', %q{
   given!(:question_author) { create(:user) }
   given!(:question) { create(:question, user: question_author) }
 
-  scenario 'Unauthenticated user cannot vote question' do
+  scenario 'Unauthenticated user cannot vote question', js: true do
     visit question_path(question)
-    click_on 'vote-up-btn'
-
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).not_to have_selector('#like', wait: 0.1)
+    expect(page).not_to have_selector('#dislike', wait: 0.1)
   end
 
-  scenario 'Authenticated user votes question' do
+  scenario 'Authenticated user votes question', js: true do
     login(user)
     visit question_path(question)
 
-    click_on 'vote-up-btn'
+    click_on 'like'
 
-    within '#vote' do
-      expect(page).to have_content 1
+    within '.votes' do
+      expect(page).to have_content(question.vote_balance, wait: 0.1)
     end
+  end
+
+  scenario 'Authenticated user tries to vote own question' do
+    login(question_author)
+    visit question_path(question)
+
+    expect(page).not_to have_selector('#like', wait: 0.1)
+    expect(page).not_to have_selector('#dislike', wait: 0.1)
+  end
+
+  scenario 'Authenticated user tries to vote question second time', js: true do
+    login(user)
+    Vote.create!(votable: question, user: user, kind: 1)
+    expect(Vote.count).to eq 1
+    visit question_path(question)
+    click_on 'like'
+
+    expect(page).to have_content('Already voted', wait: 0.1)
+  end
+
+  scenario 'Authenticated user can cancel vote', js: true do
+    login(user)
+    Vote.create!(votable: question, user: user, kind: 1)
+    expect(Vote.count).to eq 1
+    visit question_path(question)
+    click_on 'Cancel'
+    click_on 'like'
+    expect(page).not_to have_content('Already voted', wait: 0.1)
   end
 end

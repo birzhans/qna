@@ -59,7 +59,7 @@ feature 'User can vote answer', %q{
     within("#answer-#{answer.id}") do
       click_on 'Cancel'
       click_on 'like'
-      expect(page).not_to have_content('Already voted', wait: 0.1)
+      expect(page).not_to have_content('User Already voted', wait: 0.1)
     end
   end
 end

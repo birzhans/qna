@@ -1,11 +1,10 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_existence, only: [:create]
+  before_action :set_votable, only: [:create]
 
   def create
     @vote = Vote.new(
-      votable_id: params[:votable_id],
-      votable_type: params[:votable_type],
+      votable: @votable,
       user_id: current_user.id,
       kind: params[:kind].to_i
     )
@@ -13,7 +12,7 @@ class VotesController < ApplicationController
     if @vote.save
       render json: {
         kind: @vote.kind,
-        vote_balance: @vote.votable_balance,
+        vote_balance: @votable.vote_balance,
         type: @vote.votable_type,
         id: @vote.votable_id
       }
@@ -36,22 +35,13 @@ class VotesController < ApplicationController
     @vote.destroy
 
     render json: {
-      vote_balance: @votable.vote_balance,
+      vote_balance: @votable.id,
       type: @vote.votable_type,
       id: @vote.votable_id
     }
   end
 
-  private
-
-  def check_existence
-    @vote = Vote.find_by(votable_id: params[:votable_id], user_id: current_user.id)
-    render(
-      json: {
-        type: @vote.votable_type,
-        id: @vote.votable_id,
-        messages: 'Already voted'
-      },
-      status: :unprocessable_entity) if @vote
+  def set_votable
+    @votable = Object.const_get(params[:votable_type]).find(params[:votable_id])
   end
 end

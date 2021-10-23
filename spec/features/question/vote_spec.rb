@@ -50,6 +50,6 @@ feature 'User can edit vote answer', %q{
     visit question_path(question)
     click_on 'Cancel'
     click_on 'like'
-    expect(page).not_to have_content('Already voted', wait: 0.1)
+    expect(page).not_to have_content('User Already voted', wait: 0.1)
   end
 end

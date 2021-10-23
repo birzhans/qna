@@ -12,6 +12,7 @@ $(document).on('turbolinks:load', function() {
     }
   }).on('ajax:error', function(e) {
     var data = e.detail[0]
+    console.log(data);
 
     if (data.type == 'Question') {
       $('#question-vote .votes .errors').html(data.messages)

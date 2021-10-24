@@ -16,11 +16,9 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if @answer.update(answer_params.except(:files))
-      if answer_params[:files].present?
-        answer_params[:files].each do |file|
-          @answer.files.attach(file)
-        end
+    if @answer.update(answer_params.except(:files)) && answer_params[:files].present?
+      answer_params[:files].each do |file|
+        @answer.files.attach(file)
       end
     end
     @question = @answer.question
@@ -56,12 +54,10 @@ class AnswersController < ApplicationController
   end
 
   def authorize!
-    if current_user.not_author_of? @answer
-      redirect_to questions_path, notice: 'restricted access'
-    end
+    redirect_to questions_path, notice: 'restricted access' if current_user.not_author_of? @answer
   end
 
   def answer_params
-    params.require(:answer).permit(:body, files: [], links_attributes: [:name, :url])
+    params.require(:answer).permit(:body, files: [], links_attributes: %i[name url])
   end
 end

@@ -31,11 +31,9 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if @question.update(question_params.except(:files))
-      if question_params[:files].present?
-        question_params[:files].each do |file|
-          @question.files.attach(file)
-        end
+    if @question.update(question_params.except(:files)) && question_params[:files].present?
+      question_params[:files].each do |file|
+        @question.files.attach(file)
       end
     end
   end
@@ -52,14 +50,12 @@ class QuestionsController < ApplicationController
   end
 
   def authorize!
-    if current_user.not_author_of? @question
-      redirect_to questions_path, notice: 'restricted access'
-    end
+    redirect_to questions_path, notice: 'restricted access' if current_user.not_author_of? @question
   end
 
   def question_params
     params.require(:question).permit(:title, :body, files: [],
-                                     links_attributes: [:id, :name, :url, :_destroy],
-                                     reward_attributes: [:id, :name, :image, :_destroy])
+                                                    links_attributes: %i[id name url _destroy],
+                                                    reward_attributes: %i[id name image _destroy])
   end
 end

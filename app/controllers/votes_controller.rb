@@ -1,6 +1,6 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_votable, only: %w(create destroy)
+  before_action :set_votable, only: %w[create destroy]
 
   def create
     @vote = Vote.new(votable: @votable, user: current_user, kind: params[:kind].to_i)
@@ -10,8 +10,9 @@ class VotesController < ApplicationController
       render json: {
         type: @vote.votable_type,
         id: @vote.votable_id,
-        messages: @vote.errors.full_messages },
-      status: :unprocessable_entity
+        messages: @vote.errors.full_messages
+      },
+             status: :unprocessable_entity
     end
   end
 

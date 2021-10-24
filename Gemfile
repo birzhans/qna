@@ -27,7 +27,7 @@ gem 'slim-rails'
 
 # UI
 gem 'bulma-rails', '~> 0.8.0'
-gem "font-awesome-rails"
+gem 'font-awesome-rails'
 
 gem 'jquery-rails'
 gem 'cocoon'
@@ -35,7 +35,7 @@ gem 'cocoon'
 # AUTH
 gem 'devise'
 
-gem "aws-sdk-s3"
+gem 'aws-sdk-s3'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-feature 'User can delete links from question', %q{
+feature 'User can delete links from question', "
   As an question's author
   I'd like to be able to delete links
-} do
+" do
   given(:user) { create(:user) }
   given(:google_url) { 'https://www.google.com/?client=safari' }
   given(:question) { create(:question, user: user, links: [Link.new(name: 'link1', url: google_url)]) }
 
   given(:another_user) { create(:user) }
-  given(:another_question) { create(:question, user: another_user, links: [Link.new(name: 'link1', url: google_url)] ) }
+  given(:another_question) { create(:question, user: another_user, links: [Link.new(name: 'link1', url: google_url)]) }
   describe 'Authenticated user' do
     background do
       login user

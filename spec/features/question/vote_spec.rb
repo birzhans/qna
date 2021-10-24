@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-feature 'User can edit vote answer', %q{
+feature 'User can edit vote answer', "
   In order to give feedback
   As not the author of answer
   I'd like to be able to vote it
-} do
-
+" do
   given!(:user) { create(:user) }
   given!(:question_author) { create(:user) }
   given!(:question) { create(:question, user: question_author) }

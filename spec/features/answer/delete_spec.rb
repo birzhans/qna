@@ -1,14 +1,13 @@
 require 'rails_helper'
 
-feature 'User can delete answer', %q{
+feature 'User can delete answer', "
 As an authenticated user
 I'd like to be able to delete my answer
-} do
+" do
   given!(:user) { create(:user) }
   given!(:other) { create(:user) }
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question, user: user) }
-
 
   scenario 'Authenticated user tries to delete own answer', js: :true do
     login(user)

@@ -73,9 +73,9 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
-
     context 'author with valid attributes' do
       before { login question.user }
+
       it 'assigns a new Question to @question' do
         patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
         expect(assigns(:question)).to eq question
@@ -108,10 +108,10 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
 
-    context "not author" do
+    context 'not author' do
       before do
         login user
-        patch :update, params: { id: question, question: { title: 'new title', body: 'new body' }  }, format: :js
+        patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }, format: :js
       end
 
       it 'does not change question' do
@@ -123,7 +123,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    context "author" do
+    context 'author' do
       before { login question.user }
 
       it 'deletes the question' do
@@ -136,7 +136,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
 
-    context "not author" do
+    context 'not author' do
       before do
         login user
         delete :destroy, params: { id: question }
@@ -153,9 +153,8 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe "POST #upvote" do
-    context "Unauthenticated user" do
-      
+  describe 'POST #upvote' do
+    context 'Unauthenticated user' do
     end
   end
 end

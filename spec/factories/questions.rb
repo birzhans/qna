@@ -11,11 +11,11 @@ FactoryBot.define do
 
   trait :has_attached_file do
     after :create do |question|
-        question.files.attach(
-          io:           File.open(Rails.root.join('package.json')),
-          filename:     'package.json',
-          content_type: 'text/json'
-        )
-      end
+      question.files.attach(
+        io: File.open(Rails.root.join('package.json')),
+        filename: 'package.json',
+        content_type: 'text/json'
+      )
+    end
   end
 end

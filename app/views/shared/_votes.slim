@@ -12,7 +12,7 @@
               class: vote_class(votable.id, current_user&.id, 'dislike') do
       = fa_icon "thumbs-down"
 
-    - if current_user&.voted?(votable)
+    - if votable.voted?(current_user)
       = link_to 'Cancel', vote_path(votable_id: votable.id, votable_type: votable.class.to_s),
                 method: :delete, remote: true, data: { type: :json }
   #vote-balance

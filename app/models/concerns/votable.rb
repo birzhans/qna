@@ -8,4 +8,8 @@ module Votable
   def vote_balance
     votes.sum(:kind)
   end
+
+  def voted?(user)
+    votes.find_by(user: user).present?
+  end
 end

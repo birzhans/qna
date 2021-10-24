@@ -18,8 +18,4 @@ class User < ApplicationRecord
    def not_author_of?(resource)
      !author_of?(resource)
    end
-
-   def voted?(votable)
-     Vote.find_by(user: self, votable: votable).present?
-   end
 end

@@ -1,0 +1,19 @@
+.votes
+  .errors
+
+  - if current_user&.not_author_of?(votable)
+    = link_to votes_path(votable_id: votable.id, votable_type: votable.class.to_s, kind: 1),
+              method: :post, remote: true, data: { type: :json }, id: 'like',
+              class: vote_class(votable, current_user&.id, 'like') do
+      = fa_icon "thumbs-up"
+
+    = link_to votes_path(votable_id: votable.id, votable_type: votable.class.to_s, kind: -1),
+              method: :post, remote: true, data: { type: :json }, id: 'dislike',
+              class: vote_class(votable.id, current_user&.id, 'dislike') do
+      = fa_icon "thumbs-down"
+
+    - if votable.voted?(current_user)
+      = link_to 'Cancel', vote_path(votable_id: votable.id, votable_type: votable.class.to_s),
+                method: :delete, remote: true, data: { type: :json }
+  #vote-balance
+    = votable.vote_balance

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'Question author can choose best question', %q{
+feature 'Question author can choose best question', "
   As an authenticated user and author of question
   I'd like to be able to pick the best answer
-} do
+" do
   given!(:user) { create(:user) }
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
@@ -34,6 +34,5 @@ feature 'Question author can choose best question', %q{
     login(user)
     visit question_path(another_question)
     expect(page).not_to have_content('Mark Best', wait: 0.1)
-
   end
 end

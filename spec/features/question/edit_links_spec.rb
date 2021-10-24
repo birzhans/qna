@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'User can edit question links', %q{
+feature 'User can edit question links', "
   As an question's author
   I'd like to be able to edit links
-} do
+" do
   given(:user) { create(:user) }
   given(:google_url) { 'https://www.google.com/?client=safari' }
   given(:question) { create(:question, user: user) }

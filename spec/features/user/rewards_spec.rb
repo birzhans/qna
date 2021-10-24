@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'User can see awarded rewards', %q{
+feature 'User can see awarded rewards', "
   As an authenticated user
   I'd like to be able to see list of rewards
-} do
+" do
   given(:user) { create(:user) }
 
   scenario 'Authenticated user', js: true do

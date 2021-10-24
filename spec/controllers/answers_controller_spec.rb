@@ -7,6 +7,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'POST #create' do
     before { login(user) }
+
     context 'with valid attributes' do
       it 'saves a new answer to a database' do
         expect do
@@ -40,12 +41,12 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to render_template :create
       end
     end
-
   end
 
   describe 'PATCH #update' do
     let!(:answer) { create(:answer, question: question, user: user) }
-    context "author" do
+
+    context 'author' do
       before { login user }
 
       context 'with valid attributes' do
@@ -65,7 +66,7 @@ RSpec.describe AnswersController, type: :controller do
         it 'does not change answer attributes' do
           expect do
             patch :update, params: { id: answer.id, answer: attributes_for(:answer, :invalid) }, format: :js
-          end.to_not change(answer, :body)
+          end.not_to change(answer, :body)
         end
 
         it 'renders update template' do
@@ -75,20 +76,21 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context "not author" do
+    context 'not author' do
       before { login another_user }
 
       it 'does not change answer attributes' do
         expect do
           patch :update, params: { id: answer.id, answer: { body: 'edited body' } }, format: :js
-        end.to_not change(answer, :body)
+        end.not_to change(answer, :body)
       end
     end
   end
 
-  describe "DELETE #destroy" do
-    context "author" do
+  describe 'DELETE #destroy' do
+    context 'author' do
       before { login user }
+
       let!(:answer) { create(:answer, question: question, user: user) }
 
       it 'deletes the answer' do
@@ -103,8 +105,9 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context "not author" do
+    context 'not author' do
       before { login another_user }
+
       let!(:answer) { create(:answer, question: question, user: user) }
 
       it 'does not delete the answer' do
@@ -120,12 +123,13 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  describe "POST #best_answer" do
-    context "author" do
+  describe 'POST #best_answer' do
+    context 'author' do
       before { login user }
 
       context "Question doesn't have the best answer" do
         let(:answer) { create(:answer, question: question, user: question.user) }
+
         before { post :best, params: { id: answer.id }, format: :js }
 
         it 'saves the best answer to question' do
@@ -134,9 +138,10 @@ RSpec.describe AnswersController, type: :controller do
         end
       end
 
-      context "Question has the best answer" do
+      context 'Question has the best answer' do
         let(:answer) { create(:answer, question: question, user: question.user) }
         let(:other_answer) { create(:answer, question: question, user: user) }
+
         before do
           question.update(best_answer: answer)
           post :best, params: { id: other_answer.id }, format: :js
@@ -149,8 +154,9 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context "not author" do
+    context 'not author' do
       let(:answer) { create(:answer, question: question, user: user) }
+
       before { post :best, params: { id: answer.id }, format: :js }
 
       it 'does not save the best answer to question' do

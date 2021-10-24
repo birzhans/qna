@@ -8,6 +8,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "./answers.js"
 import "./questions.js"
+import "./votes.js"
 import "./direct_uploads.js"
 
 require("jquery")

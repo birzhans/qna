@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature "User can edit own questions", %q{
+feature 'User can edit own questions', "
 As authenticated user
 I'd like to be able to edit own questions
-} do
+" do
   given(:user) { create(:user) }
   given(:other_user) { create(:user) }
   given(:question) { create(:question, user: user) }
@@ -19,10 +19,10 @@ I'd like to be able to edit own questions
       click_on 'Edit'
       fill_in 'question_body', with: 'Edited question'
       click_on 'Save'
-      expect(page).to_not have_content(question.body, wait: 0.1)
+      expect(page).not_to have_content(question.body, wait: 0.1)
       expect(page).to have_content('Edited question', wait: 0.1)
       within '#question-body' do
-        expect(page).to_not have_selector('textarea', wait: 0.1)
+        expect(page).not_to have_selector('textarea', wait: 0.1)
       end
     end
 

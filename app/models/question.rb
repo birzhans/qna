@@ -1,4 +1,6 @@
 class Question < ApplicationRecord
+  include Votable
+
   has_many :answers, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable
 
@@ -15,7 +17,7 @@ class Question < ApplicationRecord
   validates :title, :body, presence: true
 
   def answers_without_best
-    best_answer_id ? answers.where('id != ?', best_answer_id) : answers
+    best_answer_id ? answers.where.not(id: best_answer_id) : answers
   end
 
   def reward_user(user_id)

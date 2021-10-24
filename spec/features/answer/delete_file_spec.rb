@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature "User can delete file from his own answer", %q{
+feature 'User can delete file from his own answer', "
 As authenticated user
 I'd like to be able to delete file from my answer
-} do
+" do
   given(:user) { create(:user) }
   given(:question) { create(:question) }
   given(:answer) { create(:answer, :has_attached_file, user: user, question: question) }
@@ -12,7 +12,7 @@ I'd like to be able to delete file from my answer
   given(:another_question) { create(:question) }
   given(:another_answer) { create(:answer, :has_attached_file, user: another_user, question: another_question) }
 
-  describe "Authenticated user" do
+  describe 'Authenticated user' do
     background do
       login user
     end
@@ -37,7 +37,7 @@ I'd like to be able to delete file from my answer
     end
   end
 
-  describe "Unauthenticated user" do
+  describe 'Unauthenticated user' do
     scenario "Tries to delete question's existing file", js: true do
       visit question_path(answer.question)
       within("#answer-#{answer.id}") do

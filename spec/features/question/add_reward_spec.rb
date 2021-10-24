@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'User can add reward to question', %q{
+feature 'User can add reward to question', "
   In order to give prize to an author of the best answer
   As an question's author
   I'd like to be able to add reward
-} do
+" do
   given(:user) { create(:user) }
 
   describe 'Authenticated user' do

@@ -10,6 +10,7 @@ import "./answers.js"
 import "./questions.js"
 import "./votes.js"
 import "./direct_uploads.js"
+import "./direct_uploads.js"
 
 require("jquery")
 require("@nathanvda/cocoon")

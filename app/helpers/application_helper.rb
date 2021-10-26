@@ -1,7 +1,14 @@
 module ApplicationHelper
-  def vote_class(votable, user_id, kind)
-    return if user_id.nil?
+  NOTICE_KEYS = {
+    alert: "alert alert-danger", notice: "alert alert-info", success: "alert alert-success",
+    warning: "alert alert-warning", primary: "alert alert-primary"
+  }
 
-    'active' if Vote.find_by(votable: votable, user_id: user_id, kind: kind)
+  def vote_class(votable, user, kind)
+    'active' if votable.voted_with_kind?(user, kind)
+  end
+
+  def message_class(key)
+    NOTICE_KEYS[key.to_sym]
   end
 end

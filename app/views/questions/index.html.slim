@@ -1,6 +1,4 @@
-h1 class='is-size-3'  All Questions (#{@count} found):
+h1  All Questions (#{@count}):
 
-= render @questions
-
-
-p= link_to 'Ask question', new_question_path
+.row.d-flex.justify-content-center
+  = render @questions

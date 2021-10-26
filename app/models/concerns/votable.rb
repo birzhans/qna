@@ -12,4 +12,8 @@ module Votable
   def voted?(user)
     votes.find_by(user: user).present?
   end
+
+  def voted_with_kind?(user, kind)
+    votes.find_by(user: user, kind: kind).present?
+  end
 end

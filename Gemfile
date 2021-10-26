@@ -26,7 +26,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'slim-rails'
 
 # UI
-gem 'bulma-rails', '~> 0.8.0'
+gem 'bootstrap', '~> 5.1.0'
 gem 'font-awesome-rails'
 
 gem 'jquery-rails'

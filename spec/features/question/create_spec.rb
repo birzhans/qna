@@ -11,8 +11,7 @@ feature 'User can create question', "
    scenario "question appears on another user's page" do
      using_session('user') do
        login(user)
-       visit questions_path
-       click_on 'Ask Question'
+       visit new_question_path
      end
 
      using_session('guest') do

@@ -22,12 +22,10 @@ feature 'User can create question', "
        fill_in 'question_title', with: 'Title'
        fill_in 'question_body', with: 'Body'
        click_on 'Ask'
-       save_and_open_page
        expect(page).to have_content 'Title'
      end
 
      using_session('guest') do
-       save_and_open_page
        expect(page).to have_content 'Title'
      end
    end

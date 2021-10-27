@@ -16,4 +16,6 @@ Rails.application.routes.draw do
 
   get 'user', to: 'users#show'
   get 'rewards', to: 'users#rewards'
+
+  mount ActionCable.server => '/cable'
 end

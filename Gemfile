@@ -35,8 +35,14 @@ gem 'cocoon'
 # AUTH
 gem 'devise'
 
+# image storing
 gem 'aws-sdk-s3'
 
+
+#
+gem 'redis'
+gem 'gon'
+gem 'skim'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

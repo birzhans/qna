@@ -29,6 +29,8 @@ p.subtitle#question-body
     = render 'edit_form', question: @question
     = link_to 'Delete', question_path(@question), method: :delete, class: 'button is-warning'
 
+= render 'comments/comments', commentable: @question
+
 hr
 h1 Answers
 .container#best-answer

@@ -11,3 +11,5 @@ div id="answer-#{answer.id}"
     = link_to 'Edit', '#', class: 'edit-answer button is-text', data: { answer_id: answer.id }
     = link_to 'Delete Answer', answer_path(answer), method: :delete, remote: true, class: 'button is-text'
     = render 'answers/edit_form', answer: answer
+  = render 'comments/comments', commentable: answer
+  hr

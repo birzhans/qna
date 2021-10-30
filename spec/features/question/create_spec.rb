@@ -7,11 +7,35 @@ feature 'User can create question', "
 " do
   given(:user) { create(:user) }
 
+  describe 'Multiple session', js: true do
+    scenario "question appears on another user's page" do
+      using_session('user') do
+        login(user)
+        visit new_question_path
+      end
+
+      using_session('guest') do
+        visit questions_path
+      end
+
+      using_session('user') do
+        fill_in 'question_title', with: 'Title'
+        fill_in 'question_body', with: 'Body'
+        click_on 'Ask'
+        expect(page).to have_content 'Title'
+      end
+
+      using_session('guest') do
+        expect(page).to have_content 'Title'
+      end
+    end
+  end
+
   describe 'Authenticated user' do
     background do
       login(user)
       visit questions_path
-      click_on 'Ask question'
+      click_on 'Ask Question'
     end
 
     scenario 'asks a question' do
@@ -41,7 +65,7 @@ feature 'User can create question', "
 
   scenario 'Unauthenticated user tries to ask a question' do
     visit questions_path
-    click_on 'Ask question'
+    click_on 'Ask Question'
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 end

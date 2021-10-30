@@ -1,0 +1,7 @@
+<% if @comment.commentable_type == 'Question' %>
+  $('.comments').append("<p>" + `<%= "#{@comment.user.email}: #{@comment.body}" %>` + "</p>")
+  $('#comment_body').val('')
+<% elsif @comment.commentable_type == 'Answer' %>
+  $(`#answer-<%= @comment.commentable.id %> .comments`).append("<p>" + `<%= "#{@comment.user.email}: #{@comment.body}" %>` + "</p>")
+  $(`#answer-<%= @comment.commentable.id %> #comment_body`).val('')
+<% end %>

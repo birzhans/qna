@@ -4,6 +4,8 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: %w[update destroy best]
   before_action :authorize!, only: %w[update destroy]
 
+  after_action :publish_answer, only: %w[create]
+
   def new
     @answer = @question.answers.new
   end
@@ -51,6 +53,20 @@ class AnswersController < ApplicationController
 
   def set_answer
     @answer = Answer.with_attached_files.find(params[:id])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast(
+      "answer_#{@question.id}",
+      {
+        answer: @answer,
+        question_user_id: @answer.question.user_id,
+        links: @answer.links,
+        files: @answer.files
+      }
+    )
   end
 
   def authorize!

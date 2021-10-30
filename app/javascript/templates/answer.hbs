@@ -1,0 +1,34 @@
+<div id="answer-{{ answer.id }}">
+  <div class="votes">
+    <div class="errors"></div>
+
+    <a data-type="json" id="like" data-remote="true" rel="nofollow" data-method="post"
+       href="/votes?kind=1&votable_id={{ answer.id }}&votable_type=Answer">
+      <i class="fa fa-thumbs-up"></i>
+    </a>
+
+    <a data-type="json" id="dislike" data-remote="true" rel="nofollow" data-method="post"
+       href="/votes?kind=-1&votable_id={{ answer.id }}&votable_type=Answer">
+      <i class="fa fa-thumbs-down"></i>
+    </a>
+
+    <div id="vote-balance">0</div>
+  </div>
+
+  <p>{{ answer.body }}</p>
+
+  <div id="answer-links">
+    <p>Links:</p>
+
+    {{#each links}}
+       <div id="link-{{this.id}}"><a href="{{this.url}}">{{this.name}}</a></div>
+    {{/each}}
+  </div>
+
+  {{#if current_user_author_of_question}}
+   <a class="btn" data-remote="true" rel="nofollow" data-method="post" href="/answers/{{ answer.id }}/best">
+     Mark Best
+   </a>
+  {{/if}}
+  <hr>
+</div>

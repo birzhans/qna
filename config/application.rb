@@ -15,6 +15,8 @@ module Qna
     #
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
+
+    config.action_cable.disable_request_forgery_protection = false
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")

@@ -3,6 +3,7 @@ class Question < ApplicationRecord
 
   has_many :answers, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable
+  has_many :comments, dependent: :destroy, as: :commentable
 
   has_one :reward, dependent: :destroy
 
@@ -21,6 +22,6 @@ class Question < ApplicationRecord
   end
 
   def reward_user(user_id)
-    reward.update(user_id: user_id) if reward
+    reward&.update(user_id: user_id)
   end
 end

@@ -6,3 +6,4 @@ div.box id="best_answer-#{best_answer.id}"
     = link_to 'Edit', '#', class: 'edit-answer button is-text', data: { answer_id: best_answer.id }
     = link_to 'Delete Answer', answer_path(best_answer), method: :delete, remote: true, class: 'button is-text'
     = render 'answers/edit_form', answer: best_answer
+  = render 'comments/comments', commentable: best_answer

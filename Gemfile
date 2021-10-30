@@ -38,8 +38,6 @@ gem 'devise'
 # image storing
 gem 'aws-sdk-s3'
 
-
-#
 gem 'redis'
 gem 'gon'
 gem 'handlebars-source'

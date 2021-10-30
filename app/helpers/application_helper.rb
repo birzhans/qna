@@ -1,8 +1,8 @@
 module ApplicationHelper
   NOTICE_KEYS = {
-    alert: "alert alert-danger", notice: "alert alert-info", success: "alert alert-success",
-    warning: "alert alert-warning", primary: "alert alert-primary"
-  }
+    alert: 'alert alert-danger', notice: 'alert alert-info', success: 'alert alert-success',
+    warning: 'alert alert-warning', primary: 'alert alert-primary'
+  }.freeze
 
   def vote_class(votable, user, kind)
     'active' if votable.voted_with_kind?(user, kind)

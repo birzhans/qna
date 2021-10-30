@@ -47,28 +47,28 @@ feature 'user can create answer', "
     given(:question) { create :question, user: user }
 
     scenario "answer appears on another user's page" do
-     using_session('user') do
-       login(user)
-       visit question_path(question)
-     end
+      using_session('user') do
+        login(user)
+        visit question_path(question)
+      end
 
-     using_session('guest') do
-       visit question_path(question)
-     end
+      using_session('guest') do
+        visit question_path(question)
+      end
 
-     using_session('user') do
-       fill_in 'new-answer-body', with: 'Answer body'
-       click_on 'Create'
-       within '.answers' do
-         expect(page).to have_content('Answer body', wait: 0.1)
-       end
-     end
+      using_session('user') do
+        fill_in 'new-answer-body', with: 'Answer body'
+        click_on 'Create'
+        within '.answers' do
+          expect(page).to have_content('Answer body', wait: 0.1)
+        end
+      end
 
-     using_session('guest') do
-       within '.answers' do
-         expect(page).to have_content('Answer body', wait: 0.1)
-       end
-     end
+      using_session('guest') do
+        within '.answers' do
+          expect(page).to have_content('Answer body', wait: 0.1)
+        end
+      end
     end
   end
 

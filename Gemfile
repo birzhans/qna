@@ -42,7 +42,7 @@ gem 'aws-sdk-s3'
 #
 gem 'redis'
 gem 'gon'
-gem 'skim'
+gem 'handlebars-source'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

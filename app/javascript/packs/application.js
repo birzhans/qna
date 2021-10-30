@@ -14,6 +14,7 @@ import "./direct_uploads.js"
 
 require("jquery")
 require("@nathanvda/cocoon")
+require("handlebars-loader")
 
 Rails.start()
 Turbolinks.start()

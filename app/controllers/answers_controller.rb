@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: %w[update destroy best]
   before_action :authorize!, only: %w[update destroy]
 
-  after_action :publish_answer
+  after_action :publish_answer, only: %w[create]
 
   def new
     @answer = @question.answers.new
@@ -57,7 +57,15 @@ class AnswersController < ApplicationController
 
   def publish_answer
     return if @answer.errors.any?
-    ActionCable.server.broadcast("answer_#{@question.id}", { answer: @answer })
+    ActionCable.server.broadcast(
+      "answer_#{@question.id}",
+      {
+        answer: @answer,
+        question_user_id: @answer.question.user_id,
+        links: @answer.links,
+        files: @answer.files
+      }
+    )
   end
 
   def authorize!
